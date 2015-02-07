@@ -9,14 +9,26 @@ module.exports = function(config) {
     preprocessors: {
       'app/**/*.js': ['browserify']
     },
-    browsers: ['Chrome'],
+
+    // Start these browsers, currently available:
+    // - Chrome
+    // - ChromeCanary
+    // - Firefox
+    // - Opera
+    // - Safari (only Mac)
+    // - PhantomJS
+    // - IE (only Windows)
+    browsers: ['PhantomJS'],
     reporters: ['progress'],
 
     autoWatch: true,
 
     plugins: [
       'karma-jasmine',
+      'karma-junit-reporter',
+      'karma-coverage',
       'karma-bro',
+      'karma-phantomjs-launcher',
       'karma-chrome-launcher',
       'karma-firefox-launcher'
     ],
