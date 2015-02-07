@@ -11,7 +11,9 @@
   require('../services/_index');
   require('../component/_index');
 
+  // pages
   require('../home/_index');
+  require('../map/_index');
   require('../about/_index');
 
   // create and bootstrap application
@@ -22,6 +24,7 @@
       'templates',
 
       'ruuvi.home',
+      'ruuvi.map',
       'ruuvi.about',
 
       'ruuvi.component',

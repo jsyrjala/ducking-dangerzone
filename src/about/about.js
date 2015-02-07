@@ -2,8 +2,8 @@
 
 (function() {
   var module = require('./_index');
-  function AboutCtrl(AppSettings) {
+  function AboutPageCtrl(AppSettings) {
     this.appTitle = AppSettings.appTitle;
   }
-  module.controller('AboutCtrl', AboutCtrl);
+  module.controller('AboutPageCtrl', AboutPageCtrl);
 })();

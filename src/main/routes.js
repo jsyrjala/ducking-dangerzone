@@ -12,15 +12,21 @@
     $stateProvider
     .state('home', {
       url: '/',
-      controller: 'ExampleCtrl as home',
+      controller: 'HomePageCtrl as homePage',
       templateUrl: 'home/home-page.html',
       title: 'Home',
     })
     .state('about', {
       url: '/about',
-      controller: 'AboutCtrl as about',
+      controller: 'AboutPageCtrl as aboutPage',
       templateUrl:  'about/about-page.html',
       title: 'About',
+    })
+    .state('map', {
+      url: '/map',
+      controller: 'MapPageCtrl as mapPage',
+      templateUrl:  'map/map-page.html',
+      title: 'Map',
     });
 
     $urlRouterProvider.otherwise('/');

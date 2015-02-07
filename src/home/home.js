@@ -5,18 +5,15 @@
   /**
    * @ngInject
    */
-  function ExampleCtrl() {
-
+  function HomePageCtrl() {
     _.map([1, 2, 3], function(e) {
       console.log('lodash', e);
     });
-    // ViewModel
-    var vm = this;
-
-    vm.title = 'AngularJS, Gulp, and Browserify!';
-    vm.number = 1234;
-
+    var self = this;
+    self.title = 'AngularJS, Gulp, and Browserify!';
+    self.number = 1234;
   }
+  module.controller('HomePageCtrl', HomePageCtrl);
 
   /** <show-data></show-data> */
   function ShowData() {
@@ -28,7 +25,6 @@
       templateUrl: 'home/showData.html',
     };
   }
-
   function ShowDataCtrl($scope, ExampleService) {
     console.log('ShowDataCtrl running');
     $scope.title = 'my title in ShowDataCtrl';
@@ -36,8 +32,7 @@
       ExampleService.get();
     };
   }
-
-  module.controller('ExampleCtrl', ExampleCtrl);
   module.directive('showData', ShowData);
   module.controller('ShowDataCtrl', ShowDataCtrl);
+
 })();
