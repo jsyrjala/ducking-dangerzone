@@ -2,8 +2,7 @@
   "name": "ruuvitracker-explorer",
   "version": "0.1.0",
   "author": "Juha Syrjälä <juha.syrjala@gmail.com>",
-  "contributors": [
-  ],
+  "contributors": [],
   "description": "TODO",
   "repository": {
     "type": "git",
@@ -64,7 +63,8 @@
     "uglifyify": "^2.5.0",
     "vinyl-source-stream": "^0.1.1",
     "watchify": "^2.0.0",
-    "leaflet": "0.7.3"
+    "leaflet": "0.7.3",
+    "leaflet.fullscreen": "~1.1.4"
   },
   "browserify": {
     "transform": [
