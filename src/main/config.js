@@ -1,10 +1,10 @@
 'use strict';
 
 (function() {
-  var AppSettings = {
+  var Config = {
     appTitle: 'RuuviTracker Explorer',
     apiUrl: '/api/v1'
   };
 
-  module.exports = AppSettings;
+  module.exports = Config;
 })();

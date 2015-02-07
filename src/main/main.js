@@ -34,7 +34,7 @@
     // mount on window for testing
     window.app = angular.module('app', requires);
 
-    angular.module('app').constant('AppSettings', require('./constants'));
+    angular.module('app').constant('Config', require('./config'));
 
     angular.module('app').config(require('./routes'));
 
