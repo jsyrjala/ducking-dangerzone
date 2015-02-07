@@ -7,6 +7,9 @@ var controllersModule = require('./_index');
  */
 function ExampleCtrl() {
 
+  _.map([1, 2, 3], function(e) {
+    console.log('lodash', e);
+  });
   // ViewModel
   var vm = this;
 

@@ -9,6 +9,8 @@ require('./controllers/_index');
 require('./services/_index');
 require('./directives/_index');
 
+window._ = require('lodash');
+
 // create and bootstrap application
 angular.element(document).ready(function() {
 
