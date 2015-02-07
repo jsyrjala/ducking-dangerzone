@@ -37,7 +37,7 @@ function buildScript(file) {
     var stream = bundler.bundle();
 
     gutil.log('Rebundle...');
-    console.log(config.scripts.dest);
+
     return stream.on('error', handleErrors)
       .pipe(source(file))
       .pipe(gulpif(global.isProd, streamify(uglify())))
