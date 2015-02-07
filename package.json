@@ -1,29 +1,18 @@
 {
-  "name": "angularjs-gulp-browserify-boilerplate",
+  "name": "ruuvitracker-explorer",
   "version": "0.1.0",
-  "author": "Jake Marsh <jakemmarsh@gmail.com>",
+  "author": "Juha Syrjälä <juha.syrjala@gmail.com>",
   "contributors": [
-    {
-      "name": "Solomon Hawk",
-      "email": "solomon.hawk@viget.com",
-      "url": "http://www.solomohawk.com/"
-    }
   ],
-  "description": "Boilerplate using AngularJS, SASS, Gulp, and Browserify while also utilizing best practices.",
+  "description": "TODO",
   "repository": {
     "type": "git",
-    "url": "https://github.com/jakemmarsh/angularjs-gulp-browserify-boilerplate.git"
+    "url": ""
   },
   "keywords": [
-    "express",
-    "gulp",
-    "browserify",
-    "angular",
-    "sass",
-    "karma",
-    "jasmine",
-    "protractor",
-    "boilerplate"
+    "leaflet",
+    "tracking",
+    "gps"
   ],
   "private": true,
   "engines": {
