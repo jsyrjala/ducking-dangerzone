@@ -10,8 +10,8 @@ module.exports = {
   },
 
   'scripts': {
-    'src' : 'app/js/**/*.js',
-    'dest': 'build/js'
+    'src' : 'app/**/*.js',
+    'dest': 'build/'
   },
 
   'images': {
@@ -33,8 +33,8 @@ module.exports = {
   },
 
   'browserify': {
-    'entries'   : ['./app/js/main.js'],
-    'bundleName': 'main.js'
+    'entries'   : ['./app/ruuvi.js'],
+    'bundleName': 'ruuvi.js'
   },
 
   'test': {
