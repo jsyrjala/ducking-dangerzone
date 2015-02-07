@@ -1,28 +1,30 @@
 'use strict';
 
-var servicesModule = require('./_index.js');
+(function() {
+  var module = require('./_index.js');
 
-/**
- * @ngInject
- */
-function ExampleService($q, $http) {
+  /**
+   * @ngInject
+   */
+  function ExampleService($q, $http) {
 
-  var service = {};
+    var service = {};
 
-  service.get = function() {
-    var deferred = $q.defer();
+    service.get = function() {
+      var deferred = $q.defer();
 
-    $http.get('apiPath').success(function(data) {
-        deferred.resolve(data);
-    }).error(function(err, status) {
-        deferred.reject(err, status);
-    });
+      $http.get('apiPath').success(function(data) {
+          deferred.resolve(data);
+      }).error(function(err, status) {
+          deferred.reject(err, status);
+      });
 
-    return deferred.promise;
-  };
+      return deferred.promise;
+    };
 
-  return service;
+    return service;
 
-}
+  }
 
-servicesModule.service('ExampleService', ExampleService);
+  module.service('ExampleService', ExampleService);
+})();

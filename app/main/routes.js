@@ -1,22 +1,25 @@
 'use strict';
 
-/**
- * @ngInject
- */
-function Routes($stateProvider, $locationProvider, $urlRouterProvider) {
 
-  $locationProvider.html5Mode(true);
+ (function() {
+   /**
+   * @ngInject
+   */
+  function Routes($stateProvider, $locationProvider, $urlRouterProvider) {
 
-  $stateProvider
-  .state('Home', {
-    url: '/',
-    controller: 'ExampleCtrl as home',
-    templateUrl: 'home/home.html',
-    title: 'Home'
-  });
+    $locationProvider.html5Mode(true);
 
-  $urlRouterProvider.otherwise('/');
+    $stateProvider
+    .state('home', {
+      url: '/',
+      controller: 'ExampleCtrl as home',
+      templateUrl: 'home/home.html',
+      title: 'Home'
+    });
 
-}
+    $urlRouterProvider.otherwise('/');
 
-module.exports = Routes;
+  }
+
+  module.exports = Routes;
+})();
