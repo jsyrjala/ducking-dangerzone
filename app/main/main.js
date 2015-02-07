@@ -5,9 +5,9 @@ var angular = require('angular');
 // angular modules
 require('angular-ui-router');
 require('../js/templates');
-require('../js/controllers/_index');
-require('../js/services/_index');
-require('../js/directives/_index');
+
+require('../home/_index');
+require('../services/_index');
 
 window._ = require('lodash');
 
@@ -17,9 +17,8 @@ angular.element(document).ready(function() {
   var requires = [
     'ui.router',
     'templates',
-    'app.controllers',
-    'app.services',
-    'app.directives'
+    'ruuvi.home',
+    'ruuvi.services',
   ];
 
   // mount on window for testing
