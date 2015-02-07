@@ -5,27 +5,27 @@ module.exports = {
   'serverport': 3000,
 
   'styles': {
-    'src' : 'app/styles/**/*.scss',
+    'src' : 'src/styles/**/*.scss',
     'dest': 'build/css'
   },
 
   'scripts': {
-    'src' : 'app/**/*.js',
+    'src' : 'src/**/*.js',
     'dest': 'build/'
   },
 
   'images': {
-    'src' : 'app/images/**/*',
+    'src' : 'src/images/**/*',
     'dest': 'build/images'
   },
 
   'views': {
     'watch': [
-      'app/index.html',
-      'app/**/*.html'
+      'src/index.html',
+      'src/**/*.html'
     ],
-    'src': 'app/**/*.html',
-    'dest': 'app/js'
+    'src': 'src/**/*.html',
+    'dest': 'src/js'
   },
 
   'dist': {
@@ -33,7 +33,7 @@ module.exports = {
   },
 
   'browserify': {
-    'entries'   : ['./app/ruuvi.js'],
+    'entries'   : ['./src/ruuvi.js'],
     'bundleName': 'ruuvi.js'
   },
 

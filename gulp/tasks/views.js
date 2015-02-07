@@ -8,10 +8,10 @@ var templateCache  = require('gulp-angular-templatecache');
 gulp.task('views', function() {
 
   // Put our index.html in the dist folder
-  gulp.src('app/index.html')
+  gulp.src('src/index.html')
     .pipe(gulp.dest(config.dist.root));
 
-  // Process any other view files from app/views
+  // Process any other view files from src/
   return gulp.src(config.views.src)
     .pipe(templateCache({
       standalone: true
