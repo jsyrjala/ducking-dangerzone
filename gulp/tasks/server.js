@@ -13,10 +13,13 @@ gulp.task('server', function() {
 
   // log all requests to the console
   server.use(morgan('dev'));
+
+  // read files form directory
   server.use(express.static(config.dist.root));
 
-  // Serve index.html for all routes to leave routing up to Angular
+  // Serve index.html for all routes to leave routing up to Angular if not found above
   server.all('/*', function(req, res) {
+    console.log('req.url', req.url);
       res.sendFile('index.html', { root: 'build' });
   });
 

@@ -18,4 +18,5 @@ function ExampleCtrl() {
 
 }
 
+
 controllersModule.controller('ExampleCtrl', ExampleCtrl);
