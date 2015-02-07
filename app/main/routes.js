@@ -13,8 +13,14 @@
     .state('home', {
       url: '/',
       controller: 'ExampleCtrl as home',
-      templateUrl: 'home/home.html',
-      title: 'Home'
+      templateUrl: 'home/home-page.html',
+      title: 'Home',
+    })
+    .state('about', {
+      url: '/about',
+      controller: 'AboutCtrl as about',
+      templateUrl:  'about/about-page.html',
+      title: 'About',
     });
 
     $urlRouterProvider.otherwise('/');

@@ -2,7 +2,7 @@
 
 (function() {
   var AppSettings = {
-    appTitle: 'Example Application',
+    appTitle: 'RuuviTracker Explorer',
     apiUrl: '/api/v1'
   };
 

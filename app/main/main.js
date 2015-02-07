@@ -8,10 +8,11 @@
   require('../js/templates');
 
   // application modules
-  require('../home/_index');
   require('../services/_index');
   require('../component/_index');
 
+  require('../home/_index');
+  require('../about/_index');
 
   // create and bootstrap application
   angular.element(document).ready(function() {
@@ -19,7 +20,10 @@
     var requires = [
       'ui.router',
       'templates',
+
       'ruuvi.home',
+      'ruuvi.about',
+
       'ruuvi.component',
       'ruuvi.services',
     ];
