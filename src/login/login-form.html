@@ -1,0 +1,16 @@
+<div id="login-form">
+  <form class="pure-form pure-form-stacked">
+    <fieldset>
+      <legend>Login to {{::loginForm.appTitle}}</legend>
+
+      <input type="text" placeholder="Username">
+      <input type="password" placeholder="Password">
+
+      <label for="remember">
+        <input id="remember" type="checkbox"> Remember me
+      </label>
+      <button ng-click="loginForm.signIn(loginForm.form)" type="submit" class="pure-button pure-button-primary">Sign in</button>
+      <a ng-click="loginForm.forgotPassword()" href="#">Forgot password?</a>
+    </fieldset>
+  </form>
+</div>
