@@ -1,0 +1,54 @@
+// screen sizes
+$phone-width: 480px;
+$tablet-width: 768px;
+$tablet-landscape: 992px;
+$desktop-width: 1260px;
+
+// breakpoints
+@mixin to-phone() {
+  @media (max-width: $phone-width) {
+    @content;
+  }
+}
+
+@mixin from-phone() {
+  @media (min-width: $phone-width + 1) {
+    @content;
+  }
+}
+
+@mixin to-tablet() {
+  @media (max-width: $tablet-width) {
+    @content;
+  }
+}
+
+@mixin from-tablet() {
+  @media (min-width: $tablet-width + 1) {
+    @content;
+  }
+}
+
+@mixin to-tablet-landscape() {
+  @media (max-width: $tablet-landscape) {
+    @content;
+  }
+}
+
+@mixin from-tablet-landscape() {
+  @media (min-width: $tablet-landscape + 1) {
+    @content;
+  }
+}
+
+@mixin to-desktop() {
+  @media (max-width: $desktop-width) {
+    @content;
+  }
+}
+
+@mixin from-desktop() {
+  @media (min-width: $desktop-width + 1) {
+    @content;
+  }
+}

@@ -1,0 +1,12 @@
+@import 'vars';
+@import 'typography';
+@import 'mixins';
+
+.wide-navi {
+  display: none;
+  @include to-phone() {
+    display: none !important;
+  }
+  @include from-phone() {
+  }
+}
