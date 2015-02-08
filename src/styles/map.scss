@@ -9,11 +9,24 @@
   width: 100vw;
 }
 
-#map-view-old {
-  height: 100%;
+#map-menu-container {
+  position:absolute;
   width: 100%;
+  text-align: center;
 }
 
+#map-menu {
+  position: relative;
+  display: table; margin: 0 auto;
+  z-index: 6;
+  background-color: rgba(70,70,90, 1) ;
+  border-width: 0 1px 1px 1px;
+  border-radius: 0 0 4px 4px;
+  border-style: solid;
+  border-color: rgb(51,51,51);
+  color: white;
+  cursor: pointer;
+}
 // https://github.com/brunob/leaflet.fullscreen/blob/master/Control.FullScreen.css
 .leaflet-control-zoom-fullscreen {
   background-image: url("../images/icon-fullscreen.png");
