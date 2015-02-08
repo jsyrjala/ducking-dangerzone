@@ -16,6 +16,8 @@
 
   // pages
   require('../home/_index');
+  require('../login/_index');
+  require('../trackers/_index');
   require('../map/_index');
   require('../about/_index');
 
@@ -27,6 +29,8 @@
       'templates',
 
       'ruuvi.home',
+      'ruuvi.login',
+      'ruuvi.trackers',
       'ruuvi.map',
       'ruuvi.about',
 

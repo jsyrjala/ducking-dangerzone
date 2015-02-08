@@ -27,7 +27,20 @@
       controller: 'MapPageCtrl as mapPage',
       templateUrl:  'map/map-page.html',
       title: 'Map',
-    });
+    })
+    .state('login', {
+      url: '/login',
+      controller: 'LoginPageCtrl as loginPage',
+      templateUrl:  'login/login-page.html',
+      title: 'Login',
+    })
+    .state('trackers', {
+      url: '/trackers',
+      controller: 'TrackersPageCtrl as trackersPage',
+      templateUrl:  'trackers/trackers-page.html',
+      title: 'Trackers',
+    })
+    ;
 
     $urlRouterProvider.otherwise('/');
 

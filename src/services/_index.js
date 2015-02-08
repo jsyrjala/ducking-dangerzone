@@ -8,4 +8,5 @@
   // Define the list of services here
   require('./example.js');
   require('./map-service.js');
+  require('./login-service.js');
 })();
