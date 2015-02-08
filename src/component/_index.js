@@ -5,4 +5,5 @@
   require('./page.js');
   require('./page-footer.js');
   require('./navi.js');
+  require('./components.js')
 })();

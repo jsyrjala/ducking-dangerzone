@@ -5,6 +5,9 @@
 
   // angular modules
   require('angular-ui-router');
+  require('angular-animate');
+
+  // cached templates
   require('../js/templates');
 
   // application modules
