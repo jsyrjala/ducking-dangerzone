@@ -2,6 +2,15 @@
 
   <h1>Trackers</h1>
 
-  
+  <ul ng-repeat="tracker in trackersPage.trackers | orderBy:'-latest_activity'">
+    <li>
+      {{tracker.name}}
+      <strong>{{tracker.tracker_code}}</strong>
+      Created: <strong title="{{tracker.created_on}}">{{tracker.created_on | timeAgo}}</strong>
+      <span ng-if="tracker.latest_activity">
+        Latest: <strong title="{{tracker.latest_activity}}">{{tracker.latest_activity | timeAgo}}</strong>
+      </span>
+    </li>
+  </ul>
 
 </page>

@@ -2,6 +2,7 @@
 
 (function() {
   var module = require('./_index');
+  var moment = require('moment');
 
   /* <a ng-click="foo()" prevent-default>
    * Prevents event bubbling to other events from click and dblclick events.
@@ -20,5 +21,18 @@
           });
         }
       };
+  });
+  /** {{value | timeAgo}} */
+  module.filter('timeAgo', function timeAgo() {
+    return function(input) {
+      if(!input) {
+        return input;
+      }
+      try {
+        return moment(input).fromNow();
+      } catch(e) {
+        return input;
+      }
+    };
   });
 })();
