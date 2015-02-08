@@ -7,7 +7,7 @@ module.exports = function(config) {
     basePath: '../',
     frameworks: ['jasmine', 'browserify'],
     preprocessors: {
-      'app/**/*.js': ['browserify']
+      'src/**/*.js': ['browserify']
     },
 
     // Start these browsers, currently available:
@@ -44,7 +44,7 @@ module.exports = function(config) {
       'node_modules/angular-mocks/angular-mocks.js',
 
       // app-specific code
-      'app/ruuvi.js',
+      'src/ruuvi.js',
 
       // test files
       'test/unit/**/*.js'
