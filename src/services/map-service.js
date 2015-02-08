@@ -3,7 +3,7 @@
 (function() {
   var module = require('./_index');
   var L = require('leaflet');
-  
+
   function isTouchDevice() {
     return !!('ontouchstart' in window)  || // works on most browsers
     !!('onmsgesturechange' in window); // works on ie10
@@ -37,7 +37,7 @@
       }).setView(location, zoom);
 
       // setup layers
-      var selectedLayerName = Config.defaultLayer;
+      var selectedLayerName = Config.map.defaultLayer;
       var selectedLayer = _.find(layers, function(layer) {
         return layer.options.title === selectedLayerName;
       });
