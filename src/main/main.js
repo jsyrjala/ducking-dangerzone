@@ -26,6 +26,7 @@
   angular.element(document).ready(function() {
 
     var requires = [
+      'ngAnimate',
       'ui.router',
       'templates',
 

@@ -19,5 +19,6 @@
       console.log('open menu');
       self.showContent = !self.showContent;
     };
+
   });
 })();
