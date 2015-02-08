@@ -11,7 +11,7 @@
   }
 
   // @ngInject
-  module.service('MapService', function MapService(Config) {
+  module.service('MapService', function MapService(Config, $timeout, $location, $rootScope) {
     var self = this;
     var _mapComponent;
 
@@ -80,11 +80,53 @@
       return map;
     }
 
+    /**
+     * Attach jquery event handlers for map menu.
+     * Angular wont work because old DOM tree (leaflet)
+     * is reattached to DOM when user returns to map page.
+     */
+    function attachMenu () {
+      var menuContent = angular.element('#menu-content');
+      var menuOpen = false;
+
+      function toggleMenu(e) {
+        // prevent event bubbling to Leaflet map
+        e.stopPropagation();
+        menuOpen = !menuOpen;
+        var operations = angular.element('#menu-content-open');
+        if(menuOpen) {
+          operations.removeClass('ng-hide');
+        } else {
+          operations.addClass('ng-hide');
+        }
+      }
+
+      menuContent.click(toggleMenu);
+      // add handler for double click, otherwise it triggers zoom in map.
+      menuContent.dblclick(toggleMenu);
+
+      // Loop over links, add click handler that changes
+      // url via $location, which won't cause page load.
+      // The new location is looked up from  <a href> attribute.
+      var menuLinks = angular.element('#menu-content-open li');
+      _.map(menuLinks, function(link) {
+        var linkElem = angular.element(link);
+        linkElem.click(function(e) {
+          e.preventDefault();
+          var href = linkElem.find('a').attr('href');
+          $rootScope.$apply(function() {
+            $location.path(href);
+          });
+        });
+      });
+    }
+
     /** attach existing map component to fresh page */
     var redisplayMapComponent = function(element) {
         var oldContainer = _mapComponent.getContainer();
         var newContainer = angular.element(element);
         newContainer.replaceWith(oldContainer);
+
         _mapComponent.invalidateSize(false);
         /*
         if(deferredCenter) {
@@ -96,9 +138,12 @@
     self.openMap = function openMapComponent(element) {
       if(_mapComponent) {
         redisplayMapComponent(element);
+
+        $timeout(attachMenu);
         return;
       }
       _mapComponent = createMapComponent(element);
+      $timeout(attachMenu);
     };
 
   });
