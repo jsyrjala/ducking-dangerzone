@@ -6,7 +6,7 @@
   // <map-view><map-view>
   function mapView(Config, MapService) {
     function link(scope, element) {
-      MapService.createMapComponent(element[0]);
+      MapService.openMap(element[0]);
     }
     return {
       scope: {

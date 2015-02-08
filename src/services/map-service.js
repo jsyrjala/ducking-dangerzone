@@ -28,6 +28,9 @@
     }
     var layers = tileLayers();
 
+    /**
+     * Create a new Leaflet map component.
+     */
     self.createMapComponent = function createMapComponent(element) {
       var zoom = Config.map.defaultZoom;
       var location = Config.map.defaultLocation;
@@ -72,5 +75,10 @@
         console.log('exited fullscreen');
       });
     };
+
+    self.openMap = function openMapComponent(element) {
+      return self.createMapComponent(element);
+    };
+
   });
 })();
