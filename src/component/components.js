@@ -12,6 +12,7 @@
       restrict: 'A',
       link: function(scope, elem) {
           elem.on('dblclick', function(e){
+            console.log('dblclick');
             e.preventDefault();
             e.stopPropagation();
           });

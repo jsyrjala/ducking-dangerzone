@@ -2,6 +2,7 @@
 
 (function() {
   var module = require('./_index');
+  var angular = require('angular');
   var L = require('leaflet');
 
   function isTouchDevice() {
@@ -12,6 +13,7 @@
   // @ngInject
   module.service('MapService', function MapService(Config) {
     var self = this;
+    var _mapComponent;
 
     function tileLayers() {
       var leafletTiles = _.filter(Config.map.mapTiles, function(tile) {
@@ -31,7 +33,7 @@
     /**
      * Create a new Leaflet map component.
      */
-    self.createMapComponent = function createMapComponent(element) {
+     function createMapComponent(element) {
       var zoom = Config.map.defaultZoom;
       var location = Config.map.defaultLocation;
 
@@ -74,10 +76,29 @@
       map.on('exitFullscreen', function(){
         console.log('exited fullscreen');
       });
+
+      return map;
+    }
+
+    /** attach existing map component to fresh page */
+    var redisplayMapComponent = function(element) {
+        var oldContainer = _mapComponent.getContainer();
+        var newContainer = angular.element(element);
+        newContainer.replaceWith(oldContainer);
+        _mapComponent.invalidateSize(false);
+        /*
+        if(deferredCenter) {
+            mapView.setView(deferredCenter.location, deferredCenter.zoom);
+            deferredCenter = null;
+        }*/
     };
 
     self.openMap = function openMapComponent(element) {
-      return self.createMapComponent(element);
+      if(_mapComponent) {
+        redisplayMapComponent(element);
+        return;
+      }
+      _mapComponent = createMapComponent(element);
     };
 
   });
