@@ -68,7 +68,8 @@
     "leaflet": "0.7.3",
     "leaflet.fullscreen": "1.1.4",
     "moment": "2.9.0",
-    "esprima": "~2.0.0"
+    "esprima": "~2.0.0",
+    "fastclick": "~1.0.6"
   },
   "browserify": {
     "transform": [
