@@ -5,6 +5,9 @@ var gulp         = require('gulp');
 var gulpif       = require('gulp-if');
 var gutil        = require('gulp-util');
 var source       = require('vinyl-source-stream');
+var sourcemaps   = require('gulp-sourcemaps');
+var buffer       = require('vinyl-buffer');
+
 var streamify    = require('gulp-streamify');
 var watchify     = require('watchify');
 var browserify   = require('browserify');
@@ -15,13 +18,12 @@ var ngAnnotate   = require('browserify-ngannotate');
 
 // Based on: http://blog.avisi.nl/2014/04/25/how-to-keep-a-fast-build-with-browserify-and-reactjs/
 function buildScript(file) {
-
   var bundler = browserify({
     entries: config.browserify.entries,
     cache: {},
     packageCache: {},
-    fullPaths: true
-  }, watchify.args);
+    fullPaths: false
+  });
 
   if ( !global.isProd ) {
     bundler = watchify(bundler);
@@ -41,6 +43,12 @@ function buildScript(file) {
     return stream.on('error', handleErrors)
       .pipe(source(file))
       .pipe(gulpif(global.isProd, streamify(uglify())))
+      // sourcemap
+      .pipe(buffer())
+      .pipe(sourcemaps.init({loadMaps: true}))
+      .pipe(sourcemaps.init())
+      .pipe(sourcemaps.write('./sourcemaps'))
+      // sourceamp ends
       .pipe(gulp.dest(config.scripts.dest))
       .pipe(browserSync.reload({ stream: true, once: true }));
   }
