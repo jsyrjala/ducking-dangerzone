@@ -45,6 +45,11 @@
       controller: 'TrackersPageCtrl as trackersPage',
       templateUrl:  'trackers/trackers-page.html',
       title: 'Trackers',
+      resolve: {
+        trackersData: ['TrackerService', function(TrackerService) {
+          return TrackerService.listTrackers();
+        },
+      ]}
     })
     ;
 
