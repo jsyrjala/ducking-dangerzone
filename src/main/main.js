@@ -7,6 +7,7 @@
   require('angular-ui-router');
   require('angular-animate');
   require('angular-resource');
+  require('angular-messages');
 
   // cached templates
   require('../js/templates');
@@ -18,6 +19,7 @@
   // pages
   require('../home/_index');
   require('../login/_index');
+  require('../register/_index');
   require('../trackers/_index');
   require('../map/_index');
   require('../about/_index');
@@ -27,11 +29,13 @@
 
     var requires = [
       'ngAnimate',
+      'ngMessages',
       'ui.router',
       'templates',
 
       'ruuvi.home',
       'ruuvi.login',
+      'ruuvi.register',
       'ruuvi.trackers',
       'ruuvi.map',
       'ruuvi.about',

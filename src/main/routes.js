@@ -34,6 +34,12 @@
       templateUrl:  'login/login-page.html',
       title: 'Login',
     })
+    .state('register', {
+      url: '/register',
+      controller: 'RegisterPageCtrl as registerPage',
+      templateUrl:  'register/register-page.html',
+      title: 'Register a new account',
+    })
     .state('trackers', {
       url: '/trackers',
       controller: 'TrackersPageCtrl as trackersPage',

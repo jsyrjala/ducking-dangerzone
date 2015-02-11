@@ -1,8 +1,7 @@
-<div id="login-form">
+<div id="register-form">
   <form class="pure-form pure-form-stacked" name="form" novalidate>
     <fieldset>
-      <legend>Login to {{::loginForm.appTitle}}</legend>
-
+      <legend>Register new account to {{::ctrl.appTitle}}</legend>
 
       <div class="form-field">
         <div class="validation-error" ng-messages="form.username.$error" ng-if="form.$submitted || form.username.$touched">
@@ -20,11 +19,7 @@
         <input name="password" type="password" placeholder="Password" ng-model="ctrl.data.password" minlength="8" required ng-model-options="{ debounce : { 'default' : 500 } }">
       </div>
 
-      <label for="remember">
-        <input id="remember" type="checkbox"> Remember me
-      </label>
-      <button ng-click="ctrl.signIn(form.$valid, ctrl.data)" type="submit" class="pure-button pure-button-primary">Sign in</button>
-      <a ng-click="ctrl.forgotPassword()" href="#">Forgot password?</a>
+      <button ng-click="ctrl.register(form.$valid, ctrl.data)" type="submit" class="pure-button pure-button-primary">Register</button>
     </fieldset>
   </form>
 </div>

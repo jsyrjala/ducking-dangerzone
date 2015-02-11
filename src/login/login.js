@@ -10,18 +10,18 @@
       scope: {},
       restrict: 'E',
       replace: true,
-      controller: 'LoginFormCtrl as loginForm',
+      controller: 'LoginFormCtrl as ctrl',
       templateUrl: 'login/login-form.html',
       bindToController: true,
     };
   });
   module.controller('LoginFormCtrl', function LoginFormCtrl(Config) {
     var self = this;
-    self.form = {};
+    self.data = {};
     self.appTitle = Config.appTitle;
 
-    self.signIn = function (form) {
-      console.log('signIn', form);
+    self.signIn = function (valid, data) {
+      console.log('signIn', valid, data);
     };
 
     self.forgotPassword = function() {
