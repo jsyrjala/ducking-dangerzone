@@ -45,9 +45,9 @@ function buildScript(file) {
       .pipe(source(file))
       // sourcemap
       .pipe(gulpif(global.isProd, buffer()))
-      .pipe(gulpif(global.isProd, sourcemaps.init({loadMaps: false, debug: true})))
+      .pipe(gulpif(global.isProd, sourcemaps.init()))
       .pipe(gulpif(global.isProd, streamify(uglify())))
-      .pipe(gulpif(global.isProd, sourcemaps.write('./', {includeContent: true})))
+      .pipe(gulpif(global.isProd, sourcemaps.write('./')))
       // sourceamp ends
       .pipe(gulp.dest(config.scripts.dest))
       .pipe(browserSync.reload({ stream: true, once: true }));
