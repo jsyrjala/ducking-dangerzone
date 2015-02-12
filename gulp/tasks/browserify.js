@@ -22,7 +22,8 @@ function buildScript(file) {
     entries: config.browserify.entries,
     cache: {},
     packageCache: {},
-    fullPaths: false
+    fullPaths: false,
+    debug: true,
   });
 
   if ( !global.isProd ) {
@@ -42,12 +43,11 @@ function buildScript(file) {
 
     return stream.on('error', handleErrors)
       .pipe(source(file))
-      .pipe(gulpif(global.isProd, streamify(uglify())))
       // sourcemap
-      .pipe(buffer())
-      .pipe(sourcemaps.init({loadMaps: true}))
-      .pipe(sourcemaps.init())
-      .pipe(sourcemaps.write('./sourcemaps'))
+      .pipe(gulpif(global.isProd, buffer()))
+      .pipe(gulpif(global.isProd, sourcemaps.init({loadMaps: false, debug: true})))
+      .pipe(gulpif(global.isProd, streamify(uglify())))
+      .pipe(gulpif(global.isProd, sourcemaps.write('./', {includeContent: true})))
       // sourceamp ends
       .pipe(gulp.dest(config.scripts.dest))
       .pipe(browserSync.reload({ stream: true, once: true }));
