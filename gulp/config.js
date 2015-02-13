@@ -27,7 +27,11 @@ module.exports = {
     'src': 'src/**/*.html',
     'dest': 'src/js'
   },
-
+  'gzip': {
+    'src': 'build/**/*.{html,xml,json,css,js}',
+    'dest': 'build/',
+    'options': {}
+  },
   'dist': {
     'root'  : 'build'
   },
