@@ -4,18 +4,31 @@
   require('leaflet.fullscreen');
 
   // <map-view><map-view>
-  function mapView(Config, MapService, $window) {
+  function mapView(Config, MapService, $window, $interval) {
     function link(scope, element) {
       MapService.openMap(element[0]);
-      /*
-      resize code
-      var elem = $(element[0]);
-      $($window).on('resize', function() {
+
+      var windowInnerHeight = window.innerHeight;
+      function resize() {
+        windowInnerHeight = $window.innerHeight;
         elem.height($(window).height())
                     .width($(window).width());
         MapService.invalidateSize();
-      }).trigger('resize');
-      */
+      }
+      var elem = $(element[0]);
+      $($window).on('resize', resize).trigger('resize');
+
+      var poller = $interval(function() {
+        if (windowInnerHeight !== $window.innerHeight) {
+          resize();
+        }
+      }, 250);
+
+      scope.$on('$destroy', function() {
+        $($window).off('resize', resize);
+        $interval.cancel(poller);
+      });
+
     }
     return {
       scope: {
