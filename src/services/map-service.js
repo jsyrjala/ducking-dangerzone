@@ -146,5 +146,8 @@
       $timeout(attachMenu);
     };
 
+    self.invalidateSize = function invalidateSize() {
+      _mapComponent.invalidateSize();
+    };
   });
 })();
