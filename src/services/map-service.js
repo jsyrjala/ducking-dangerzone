@@ -4,12 +4,16 @@
   var module = require('./_index');
   var angular = require('angular');
   var L = require('leaflet');
+  require('./leaflet-map-menu');
 
   function isTouchDevice() {
     return !!('ontouchstart' in window)  || // works on most browsers
     !!('onmsgesturechange' in window); // works on ie10
   }
 
+  /**
+   * Users current location
+   */
   module.service('CurrentLocation', function($rootScope) {
     var _location;
     var _eventKey = 'location:change';
@@ -70,8 +74,6 @@
       _.each(layers, function(layer) {
         baseMaps[layer.options.title] = layer;
       });
-      // add layer selection control
-      L.control.layers(baseMaps).addTo(map);
 
       // disable zoom for touch devices
       if(!isTouchDevice()) {
@@ -86,6 +88,9 @@
         forcePseudoFullscreen: false // force use of pseudo full screen even if full screen API is available, default false
       }).addTo(map);
 
+      L.control.mapMenu({
+
+      }).addTo(map);
       // events are fired when entering or exiting fullscreen.
       map.on('enterFullscreen', function(){
         console.log('entered fullscreen');
@@ -192,4 +197,5 @@
       _mapComponent.invalidateSize();
     };
   });
+
 })();

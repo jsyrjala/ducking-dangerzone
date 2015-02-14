@@ -67,6 +67,16 @@
 }
 
 
+.leaflet-control-map-menu {
+  // TODO background images
+  background-image: url("../images/icon-fullscreen.png");
+}
+.leaflet-retina .leaflet-control-map-menu {
+  // TODO background images
+  background-image: url("../images/icon-fullscreen-2x.png");
+  background-size: 26px 26px;
+}
+
 // https://github.com/brunob/leaflet.fullscreen/blob/master/Control.FullScreen.css
 .leaflet-control-zoom-fullscreen {
   background-image: url("../images/icon-fullscreen.png");
@@ -87,4 +97,16 @@
   top: 0px !important;
   left: 0px !important;
   z-index: 99999;
+}
+
+.leaflet-top.leaflet-right {
+  .leaflet-bar {
+    margin-right: 0;
+    margin-top: 0;
+    a:last-child {
+      border-bottom-right-radius: 0;
+      border-top-right-radius: 0;
+      border-top-left-radius: 0;
+    }
+  }
 }
