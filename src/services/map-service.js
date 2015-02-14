@@ -82,13 +82,14 @@
       }
 
       // add full screen button
+      /*
       L.control.fullscreen({
         position: 'topleft', // change the position of the button can be topleft, topright, bottomright or bottomleft, defaut topleft
         title: 'Fullscreen', // change the title of the button, default Full Screen
         forceSeparateButton: true, // force seperate button to detach from zoom buttons, default false
         forcePseudoFullscreen: false // force use of pseudo full screen even if full screen API is available, default false
       }).addTo(map);
-
+      */
       L.control.mapMenu({
         openMenuCallback: function() {
           var container = $('#map-menu-container');
