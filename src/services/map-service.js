@@ -10,8 +10,26 @@
     !!('onmsgesturechange' in window); // works on ie10
   }
 
+  module.service('CurrentLocation', function($rootScope) {
+    var _location;
+    var _eventKey = 'location:change';
+    var self = this;
+    self.get = function get() {
+      return _location;
+    };
+    self.set = function set(location) {
+      self._location = location;
+      $rootScope.$emit(_eventKey, location);
+      return location;
+    };
+
+    self.listen = function listen(callback) {
+      $rootScope.$on(_eventKey, callback);
+    };
+  });
+
   // @ngInject
-  module.service('MapService', function MapService(Config, $timeout, $location, $rootScope) {
+  module.service('MapService', function MapService(Config, $timeout, $location, $rootScope, CurrentLocation) {
     var self = this;
     var _mapComponent;
 
@@ -33,7 +51,7 @@
     /**
      * Create a new Leaflet map component.
      */
-     function createMapComponent(element) {
+    function createMapComponent(element) {
       var zoom = Config.map.defaultZoom;
       var location = Config.map.defaultLocation;
 
@@ -75,6 +93,19 @@
 
       map.on('exitFullscreen', function(){
         console.log('exited fullscreen');
+      });
+
+      map.on('locationfound', function(event) {
+        console.info('location found', event);
+        CurrentLocation.set(event.latlng);
+      });
+      map.on('locationerror', function(event) {
+        console.info('location error', event);
+      });
+
+      CurrentLocation.listen(function(event, location) {
+        console.log('listen', location);
+        map.setView(location);
       });
 
       return map;
@@ -138,12 +169,23 @@
     self.openMap = function openMapComponent(element) {
       if(_mapComponent) {
         redisplayMapComponent(element);
-
         $timeout(attachMenu);
         return;
       }
       _mapComponent = createMapComponent(element);
+
+      self.startLocating();
       $timeout(attachMenu);
+    };
+
+    self.startLocating = function startLocating() {
+      var opts = {
+        timeout: 10000,
+        maximumAge: 10000,
+        enableHighAccuracy: true,
+        watch: true
+      };
+      _mapComponent.locate(opts);
     };
 
     self.invalidateSize = function invalidateSize() {
