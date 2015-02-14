@@ -1,7 +1,7 @@
 'use strict';
 
 (function() {
-  var L = require('leaflet');
+  //var L = require('leaflet');
 
   var module = require('./_index');
   module.directive('mapMenu', function mapMenu() {

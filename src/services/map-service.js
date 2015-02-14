@@ -13,6 +13,7 @@
 
   /**
    * Users current location
+   * @ngInject
    */
   module.service('CurrentLocation', function($rootScope) {
     var _location;
@@ -89,7 +90,18 @@
       }).addTo(map);
 
       L.control.mapMenu({
-
+        openMenuCallback: function() {
+          var container = $('#map-menu-container');
+          if(container.hasClass('ng-hide')) {
+            $('#map-menu-container').removeClass('ng-hide');
+            $('a.leaflet-control-map-menu').addClass('fa-rotate-180');
+            console.log($('a.leaflet-control-map-menu'))
+          } else {
+            $('#map-menu-container').addClass('ng-hide');
+            $('a.leaflet-control-map-menu').removeClass('fa-rotate-180');
+            console.log($('a.leaflet-control-map-menu'))
+          }
+        },
       }).addTo(map);
       // events are fired when entering or exiting fullscreen.
       map.on('enterFullscreen', function(){

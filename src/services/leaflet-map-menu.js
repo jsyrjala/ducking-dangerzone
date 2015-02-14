@@ -12,7 +12,7 @@ L.Control.MapMenu = L.Control.extend({
     //forcePseudoFullscreen: false
   },
   onAdd: function () {
-    var className = 'leaflet-control-map-menu',
+    var className = 'leaflet-control-map-menu fa fa-arrow-left',
         container = L.DomUtil.create('div', 'leaflet-bar');
       this._createButton(this.options.title, className, container, this.openMapMenu, this);
       return container;
@@ -39,6 +39,7 @@ L.Control.MapMenu = L.Control.extend({
 
   openMapMenu: function openMapMenu() {
     console.log('openMapMenu');
+    this.options.openMenuCallback();
   }
 });
 
