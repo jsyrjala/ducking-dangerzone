@@ -1,8 +1,11 @@
 @import 'vars';
 @import 'typography';
 
+body {
+  overflow-x: hidden;
+}
 #map-page {
-  background-color: lightblue;
+  background-color: $background--dark;
   overflow: hidden;
 }
 
@@ -15,9 +18,12 @@
   position:absolute;
   -webkit-transition: 0.4s ease all;
   transition: 0.4s ease all;
-  color: red;
-  background-color: blue;
-  overflow-y:  auto;
+  color: black;
+  background-color: $background--light;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.65);
+  overflow: hidden;
   top: 3em;
   left: 4em;
   right: 3em;
@@ -31,6 +37,13 @@
   }
   .title {
     text-align: center;
+  }
+  a {
+    color: blue;
+    text-decoration: none;
+    &:hover {
+      background-color: green;
+    }
   }
 }
 

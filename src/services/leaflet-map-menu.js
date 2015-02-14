@@ -38,7 +38,6 @@ L.Control.MapMenu = L.Control.extend({
   },
 
   openMapMenu: function openMapMenu() {
-    console.log('openMapMenu');
     this.options.openMenuCallback();
   }
 });
