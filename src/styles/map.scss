@@ -1,7 +1,9 @@
 @import 'vars';
 @import 'typography';
+
 #map-page {
   background-color: lightblue;
+  overflow: hidden;
 }
 
 #map-view {
