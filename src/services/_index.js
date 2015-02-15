@@ -11,4 +11,6 @@
   require('./user-service.js');
   require('./tracker-service.js');
   require('./storage-service.js');
+  require('./util.js');
+
 })();

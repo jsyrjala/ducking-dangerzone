@@ -41,7 +41,7 @@
   });
 
   // @ngInject
-  module.service('MapService', function MapService(Config, $timeout, $location, $rootScope, CurrentLocation, Storage) {
+  module.service('MapService', function MapService(Config, $timeout, $location, $rootScope, CurrentLocation, Storage, Time) {
     var _mapStateKey = 'map-state';
     var self = this;
     var _mapComponent;
@@ -71,7 +71,7 @@
         data.zoom = zoom;
         data.lat = location.lat;
         data.lng = location.lng;
-        data.timestamp = new Date().getTime();
+        data.timestamp = Time.timestamp();
         Storage.set(_mapStateKey, data);
     };
 
