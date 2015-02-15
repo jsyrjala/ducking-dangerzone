@@ -10,6 +10,10 @@ gulp.task('images', function() {
 
   var dest = config.images.dest;
 
+  gulp.src('src/favicon.ico')
+    .pipe(changed(dest))
+    .pipe(gulp.dest('build'));
+
   return gulp.src(config.images.src)
     .pipe(changed(dest)) // Ignore unchanged files
     .pipe(gulpif(global.isProd, imagemin()))    // Optimize
