@@ -42,21 +42,12 @@ body {
     list-style-type: none;
   }
   a {
-    color: blue;
-    text-decoration: none;
-    &:hover {
-      background-color: #999;
-      color: white;
-    }
+    margin: 0.1em;
   }
   .tracking-indicator {
     color: red;
   }
 }
-
-
-
-
 
 
 // https://github.com/brunob/leaflet.fullscreen/blob/master/Control.FullScreen.css
