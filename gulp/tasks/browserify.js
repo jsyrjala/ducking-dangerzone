@@ -40,14 +40,14 @@ function buildScript(file) {
     var stream = bundler.bundle();
 
     gutil.log('Rebundle...');
-
+    var sourcemap = global.isProd && config.browserify.sourcemap;
     return stream.on('error', handleErrors)
       .pipe(source(file))
       // sourcemap
-      .pipe(gulpif(global.isProd, buffer()))
-      .pipe(gulpif(global.isProd, sourcemaps.init()))
+      .pipe(gulpif(sourcemap, buffer()))
+      .pipe(gulpif(sourcemap, sourcemaps.init()))
       .pipe(gulpif(global.isProd, streamify(uglify())))
-      .pipe(gulpif(global.isProd, sourcemaps.write('./')))
+      .pipe(gulpif(sourcemap, sourcemaps.write('./')))
       // sourceamp ends
       .pipe(gulp.dest(config.scripts.dest))
       .pipe(browserSync.reload({ stream: true, once: true }));

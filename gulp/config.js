@@ -67,7 +67,8 @@ module.exports = {
 
   'browserify': {
     'entries'   : ['./src/ruuvi.js'],
-    'bundleName': 'ruuvi.js'
+    'bundleName': 'ruuvi.js',
+    'sourcemap': false,
   },
 
   'test': {
