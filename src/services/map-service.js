@@ -88,7 +88,7 @@
         data.lng = location.lng;
         data.timestamp = Time.timestamp();
         Storage.set(_mapStateKey, data);
-    };
+    }
 
     function showMenu() {
       $('#map-menu-container').removeClass('ng-hide');
