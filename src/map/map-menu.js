@@ -17,11 +17,13 @@
   });
   module.controller('MapMenuCtrl', function MapMenuCtrl($scope, MapService, CurrentLocation) {
     var self = this;
+    self.tracking = false;
     self.locateMe = function() {
       MapService.center(CurrentLocation.get());
     };
-    $scope.xx = function() {
-      console.log('xx');
+    self.toggleTracking = function() {
+      self.tracking = !self.tracking;
+      console.log('toggle tracking', self.tracking );
     };
   });
 

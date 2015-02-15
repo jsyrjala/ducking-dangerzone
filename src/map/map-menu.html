@@ -7,17 +7,30 @@
       <div id="map-menu-links">
         <ul>
           <li>
-            <a ng-href="/trackers">Select trackers</a>
+            <a ng-href="/trackers"><span class="fa fa-fw fa-map-marker" /> Select trackers</a>
           </li>
           <li>
-            <a ng-href="/">Front page</a>
+            <a ng-href="/"><span class="fa fa-fw fa-home" /> Front page</a>
           </li>
           <li>
-            <a href="#" ng-click="ctrl.locateMe()">Locate me</a>
+            <a href="#" ng-click="ctrl.locateMe()" title="Move map to my current location."><span class="fa fa-fw fa-location-arrow" /> Locate me</a>
           </li>
           <li>
-            <a ng-click="xx()">Enable tracking</a>
+            <a ng-click="ctrl.toggleTracking()" title="Send my current location to server.">
+              <span class="fa fa-fw fa-crosshairs" />
+              <span ng-if="!ctrl.tracking">
+                Track me
+              </span>
+              <span ng-if="ctrl.tracking">
+                Stop tracking me
+              </span>
+
+            </a>
+            <span ng-if="ctrl.tracking">
+              <span class="fa fa-fw fa-circle" />Sending my location to server.
+            </span>
           </li>
+
       </ul>
       </div>
     </div>
