@@ -219,9 +219,11 @@
 
     function startLocating() {
       var opts = {
+        /*
         timeout: 10000,
         maximumAge: 10000,
         enableHighAccuracy: true,
+        */
         watch: true
       };
       _mapComponent.locate(opts);
