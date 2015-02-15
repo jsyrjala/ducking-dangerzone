@@ -38,11 +38,15 @@ body {
   .title {
     text-align: center;
   }
+  li {
+    list-style-type: none;
+  }
   a {
     color: blue;
     text-decoration: none;
     &:hover {
-      background-color: green;
+      background-color: #999;
+      color: white;
     }
   }
 }

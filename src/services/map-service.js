@@ -8,7 +8,7 @@
 
   function isTouchDevice() {
     return !!('ontouchstart' in window)  || // works on most browsers
-    !!('onmsgesturechange' in window); // works on ie10
+          !!('onmsgesturechange' in window); // works on ie10
   }
 
   /**
@@ -20,18 +20,24 @@
     var _eventKey = 'location:change';
     var self = this;
 
-    self.get = function get() {
+    function get() {
       return _location;
-    };
-    self.set = function set(location) {
+    }
+
+    function set(location) {
       self._location = location;
       $rootScope.$emit(_eventKey, location);
       return location;
-    };
+    }
 
-    self.listen = function listen(callback) {
+    function listen(callback) {
       $rootScope.$on(_eventKey, callback);
-    };
+    }
+
+    // API
+    self.get = get;
+    self.set = set;
+    self.list = listen;
   });
 
   // @ngInject
@@ -167,7 +173,7 @@
         }*/
     };
 
-    self.openMap = function openMapComponent(element) {
+    function openMapComponent(element) {
       if(_mapComponent) {
         redisplayMapComponent(element);
         return;
@@ -175,9 +181,9 @@
       _mapComponent = createMapComponent(element);
 
       self.startLocating();
-    };
+    }
 
-    self.startLocating = function startLocating() {
+    function startLocating() {
       var opts = {
         timeout: 10000,
         maximumAge: 10000,
@@ -185,11 +191,16 @@
         watch: true
       };
       _mapComponent.locate(opts);
-    };
+    }
 
-    self.invalidateSize = function invalidateSize() {
+    function invalidateSize() {
       _mapComponent.invalidateSize();
-    };
+    }
+
+    // API
+    self.startLocating = startLocating;
+    self.openMap = openMapComponent;
+    self.invalidateSize = invalidateSize;
   });
 
 })();

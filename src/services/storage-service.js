@@ -38,6 +38,7 @@
       localStorage.removeItem(key);
     }
 
+    // API
     self.set = set;
     self.get = get;
     self.remove = remove;

@@ -5,8 +5,11 @@
 
   module.service('TrackerService', function TrackerService($resource, Config) {
     var self = this;
-    self.listTrackers = function() {
+    function listTrackers() {
       return $resource(Config.server.url + '/trackers', {}, {}).get().$promise;
-    };
+    }
+
+    // API
+    self.listTrackers = listTrackers;
   });
 })();

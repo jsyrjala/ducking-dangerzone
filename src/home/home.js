@@ -25,11 +25,10 @@
       templateUrl: 'home/showData.html',
     };
   }
-  function ShowDataCtrl($scope, ExampleService) {
+  function ShowDataCtrl($scope) {
     console.log('ShowDataCtrl running');
     $scope.title = 'my title in ShowDataCtrl';
     $scope.query = function() {
-      ExampleService.get();
     };
   }
   module.directive('showData', ShowData);
