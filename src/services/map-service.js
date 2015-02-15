@@ -37,14 +37,29 @@
     // API
     self.get = get;
     self.set = set;
-    self.list = listen;
+    self.listen = listen;
   });
 
   // @ngInject
   module.service('MapService', function MapService(Config, $timeout, $location, $rootScope, CurrentLocation, Storage, Time) {
     var _mapStateKey = 'map-state';
     var self = this;
-    var _mapComponent;
+    var _mapComponent,
+        _selfMarker;
+
+    function updateMarker(marker, newLocation, options) {
+      if(!newLocation) {
+        return marker;
+      }
+      if(!marker) {
+        var newMarker = new L.Marker(newLocation, options);
+        newMarker.addTo(_mapComponent);
+        return newMarker;
+      }
+      marker.setLatLng(newLocation);
+      marker.update();
+      return marker;
+    }
 
     function tileLayers() {
       var leafletTiles = _.filter(Config.map.mapTiles, function(tile) {
@@ -61,7 +76,7 @@
     }
     var layers = tileLayers();
 
-    var storeMapState = function(event) {
+    function storeMapState(event) {
         var zoom = _mapComponent.getZoom();
         var location = _mapComponent.getCenter();
         var data = Storage.get(_mapStateKey, {});
@@ -84,6 +99,7 @@
       $('#map-menu-container').addClass('ng-hide');
       $('a.leaflet-control-map-menu').removeClass('fa-rotate-180');
     }
+
 
     /**
      * Create a new Leaflet map component.
@@ -158,12 +174,21 @@
       map.on('zoomend', storeMapState);
       map.on('moveend', storeMapState);
       map.on('layeradd', storeMapState);
-/*
+
       CurrentLocation.listen(function(event, location) {
-        console.log('listen', location);
-        map.setView(location);
+        var markerOpts = {
+          icon: new L.Icon(
+            {
+              iconUrl: 'images/pin-cross.png',
+              iconSize: [20, 25],
+              iconAnchor: [10, 25],
+              popupAnchor: [-3, -76],
+              className: 'self-location'
+            })
+        };
+        _selfMarker = updateMarker(_selfMarker, location, markerOpts);
       });
-*/
+
       return map;
     }
 
