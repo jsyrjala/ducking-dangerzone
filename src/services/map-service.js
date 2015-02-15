@@ -19,6 +19,7 @@
     var _location;
     var _eventKey = 'location:change';
     var self = this;
+
     self.get = function get() {
       return _location;
     };
@@ -34,7 +35,8 @@
   });
 
   // @ngInject
-  module.service('MapService', function MapService(Config, $timeout, $location, $rootScope, CurrentLocation) {
+  module.service('MapService', function MapService(Config, $timeout, $location, $rootScope, CurrentLocation, Storage) {
+    var _mapStateKey = 'map-state';
     var self = this;
     var _mapComponent;
 
@@ -53,12 +55,32 @@
     }
     var layers = tileLayers();
 
+    var storeMapState = function(event) {
+        var zoom = _mapComponent.getZoom();
+        var location = _mapComponent.getCenter();
+        var data = Storage.get(_mapStateKey, {});
+        if(event.layer && event.layer.options.title) {
+            data.tiles = event.layer.options.title;
+        }
+        data.zoom = zoom;
+        data.lat = location.lat;
+        data.lng = location.lng;
+        data.timestamp = new Date().getTime();
+        Storage.set(_mapStateKey, data);
+    };
+
     /**
      * Create a new Leaflet map component.
      */
     function createMapComponent(element) {
       var zoom = Config.map.defaultZoom;
+
+      var mapState = Storage.get(_mapStateKey);
       var location = Config.map.defaultLocation;
+      if(mapState) {
+          location = L.latLng(mapState.lat, mapState.lng);
+          zoom = mapState.zoom || zoom;
+      }
 
       var map = L.map(element, {
         zoomControl: false,
@@ -119,11 +141,15 @@
         console.info('location error', event);
       });
 
+      map.on('zoomend', storeMapState);
+      map.on('moveend', storeMapState);
+      map.on('layeradd', storeMapState);
+/*
       CurrentLocation.listen(function(event, location) {
         console.log('listen', location);
         map.setView(location);
       });
-
+*/
       return map;
     }
 
