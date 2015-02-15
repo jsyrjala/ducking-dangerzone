@@ -25,7 +25,7 @@
     }
 
     function set(location) {
-      self._location = location;
+      _location = location;
       $rootScope.$emit(_eventKey, location);
       return location;
     }
@@ -75,6 +75,16 @@
         Storage.set(_mapStateKey, data);
     };
 
+    function showMenu() {
+      $('#map-menu-container').removeClass('ng-hide');
+      $('a.leaflet-control-map-menu').addClass('fa-rotate-180');
+    }
+
+    function hideMenu() {
+      $('#map-menu-container').addClass('ng-hide');
+      $('a.leaflet-control-map-menu').removeClass('fa-rotate-180');
+    }
+
     /**
      * Create a new Leaflet map component.
      */
@@ -122,11 +132,9 @@
         openMenuCallback: function() {
           var container = $('#map-menu-container');
           if(container.hasClass('ng-hide')) {
-            $('#map-menu-container').removeClass('ng-hide');
-            $('a.leaflet-control-map-menu').addClass('fa-rotate-180');
+            showMenu();
           } else {
-            $('#map-menu-container').addClass('ng-hide');
-            $('a.leaflet-control-map-menu').removeClass('fa-rotate-180');
+            hideMenu();
           }
         },
       }).addTo(map);
@@ -161,16 +169,17 @@
 
     /** attach existing map component to fresh page */
     var redisplayMapComponent = function(element) {
-        var oldContainer = _mapComponent.getContainer();
-        var newContainer = angular.element(element);
-        newContainer.replaceWith(oldContainer);
+      var oldContainer = _mapComponent.getContainer();
+      var newContainer = angular.element(element);
+      newContainer.replaceWith(oldContainer);
 
-        _mapComponent.invalidateSize(false);
-        /*
-        if(deferredCenter) {
-            mapView.setView(deferredCenter.location, deferredCenter.zoom);
-            deferredCenter = null;
-        }*/
+      _mapComponent.invalidateSize(false);
+      /*
+      if(deferredCenter) {
+          mapView.setView(deferredCenter.location, deferredCenter.zoom);
+          deferredCenter = null;
+      }*/
+      hideMenu();
     };
 
     function openMapComponent(element) {
@@ -197,7 +206,14 @@
       _mapComponent.invalidateSize();
     }
 
+    function center(location, zoom) {
+      if(location) {
+        _mapComponent.setView(location, zoom);
+      }
+    }
+
     // API
+    self.center = center;
     self.startLocating = startLocating;
     self.openMap = openMapComponent;
     self.invalidateSize = invalidateSize;

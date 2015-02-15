@@ -15,11 +15,10 @@
       templateUrl: 'map/map-menu.html',
     };
   });
-  module.controller('MapMenuCtrl', function MapMenuCtrl($scope) {
-    console.log('mapmenu');
+  module.controller('MapMenuCtrl', function MapMenuCtrl($scope, MapService, CurrentLocation) {
     var self = this;
     self.locateMe = function() {
-      console.log('locateMe');
+      MapService.center(CurrentLocation.get());
     };
     $scope.xx = function() {
       console.log('xx');
