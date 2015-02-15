@@ -56,7 +56,7 @@ module.exports = {
   },
 
   'gzip': {
-    'src': 'build/**/*.{html,xml,json,css,js}',
+    'src': 'build/**/*.{html,xml,json,css,js,js.map}',
     'dest': 'build/',
     'options': {}
   },
