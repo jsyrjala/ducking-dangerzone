@@ -20,11 +20,15 @@ var ngAnnotate   = require('browserify-ngannotate');
 function buildScript(file) {
   var bundler = browserify({
     entries: config.browserify.entries,
+    noParse: ['lodash', 'angular-resource', 'angular-animate', 'angular-messages', 'angular-ui-router',
+              'leaflet', 'angular-leaflet-directive', 'jquery', 'fastclick'],
     cache: {},
     packageCache: {},
-    fullPaths: false,
-    debug: true,
+    insertGlobals: true,
+    fullPaths: !global.isProd,
+    debug: global.isProd,
   });
+
 
   if ( !global.isProd ) {
     bundler = watchify(bundler);
