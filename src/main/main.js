@@ -8,6 +8,7 @@
   require('angular-animate');
   require('angular-resource');
   require('angular-messages');
+  require('angular-leaflet-directive');
 
   // cached templates
   require('../js/templates');
@@ -32,6 +33,7 @@
       'ngMessages',
       'ui.router',
       'templates',
+      'leaflet-directive',
 
       'ruuvi.home',
       'ruuvi.login',
