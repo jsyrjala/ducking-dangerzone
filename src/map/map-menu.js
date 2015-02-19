@@ -1,8 +1,6 @@
 'use strict';
 
 (function() {
-  //var L = require('leaflet');
-
   var module = require('./_index');
 
   /** <map-menu></map-menu> */
@@ -24,7 +22,14 @@
     self.toggleTracking = function() {
       self.tracking = !self.tracking;
       console.log('toggle tracking', self.tracking );
+      // TODO implement
+      // TODO add listener for map.locate changes that sends location to server
+      // TODO check that sending works while map is not visible
     };
+    $scope.$on('$destroy', function() {
+      MapService.reset();
+    });
+
   });
 
 })();

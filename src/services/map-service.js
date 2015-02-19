@@ -45,7 +45,12 @@
     var _mapStateKey = 'map-state';
     var self = this;
     var _mapComponent,
-        _selfMarker;
+        _markers;
+
+    function reset() {
+      _markers = {};
+    }
+    reset();
 
     function updateMarker(marker, newLocation, options) {
       if(!newLocation) {
@@ -60,6 +65,7 @@
       marker.update();
       return marker;
     }
+
 
     function tileLayers() {
       var leafletTiles = _.filter(Config.map.mapTiles, function(tile) {
@@ -207,10 +213,10 @@
           })
       };
       CurrentLocation.listen(function(event, location) {
-        _selfMarker = updateMarker(_selfMarker, location, selfMarkerOpts);
+        _markers.selfMarker = updateMarker(_markers.selfMarker, location, selfMarkerOpts);
       });
 
-      _selfMarker = updateMarker(_selfMarker, CurrentLocation.get(), selfMarkerOpts);
+      _markers.selfMarker = updateMarker(_markers.selfMarker, CurrentLocation.get(), selfMarkerOpts);
 
       return map;
     }
@@ -226,6 +232,7 @@
     }
 
     // API
+    self.reset = reset;
     self.center = center;
     self.invalidateSize = invalidateSize;
     self.getMapDefaults = getMapDefaults;
