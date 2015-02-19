@@ -18,8 +18,6 @@
   function TrackerRowCtrl(TrackerService) {
     var self = this;
     self.showDetails = false;
-
-
     function toggleDetails(tracker) {
       self.showDetails = !self.showDetails;
       if(self.showDetails) {
@@ -39,7 +37,6 @@
         tracker.sessions = undefined;
       }
     }
-
     self.toggleDetails = toggleDetails;
   }
 
@@ -51,10 +48,12 @@
       replace: true,
       restrict: 'E',
       templateUrl: 'trackers/tracker-row.html',
-      controller: TrackerRowCtrl,
+      controller: 'TrackerRowCtrl',
       controllerAs: 'ctrl',
     };
   }
   // @ngInject
   module.directive('trackerRow', trackerRow);
+  // @ngInject
+  module.controller('TrackerRowCtrl', TrackerRowCtrl);
 })();
