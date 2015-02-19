@@ -100,11 +100,7 @@
       $('a.leaflet-control-map-menu').removeClass('fa-rotate-180');
     }
 
-
-    /**
-     * Create a new Leaflet map component.
-     */
-    function createMapComponent(element) {
+    function getMapDefaults() {
       var zoom = Config.map.defaultZoom;
 
       var mapState = Storage.get(_mapStateKey);
@@ -114,10 +110,27 @@
           zoom = mapState.zoom || zoom;
       }
 
-      var map = L.map(element, {
-        zoomControl: false,
-      }).setView(location, zoom);
+      var selectedLayerName = Config.map.defaultLayer;
+      var selectedLayer = _.find(layers, function(layer) {
+        return layer.options.title === selectedLayerName;
+      }) || layers[0];
 
+      return {
+        defaults: {
+          tileLayer: selectedLayer.url,
+          maxZoom: 19,
+          zoomControl: false,
+        },
+        center: {
+          lat: location.lat,
+          lng: location.lng,
+          zoom: zoom,
+        },
+      };
+    }
+
+    function registerMap(map) {
+      _mapComponent = map;
       // setup layers
       var selectedLayerName = Config.map.defaultLayer;
       var selectedLayer = _.find(layers, function(layer) {
@@ -175,58 +188,31 @@
       map.on('moveend', storeMapState);
       map.on('layeradd', storeMapState);
 
-      CurrentLocation.listen(function(event, location) {
-        var markerOpts = {
-          icon: new L.Icon(
-            {
-              iconUrl: 'images/pin-cross.png',
-              iconSize: [20, 25],
-              iconAnchor: [10, 25],
-              popupAnchor: [-3, -76],
-              className: 'self-location'
-            })
-        };
-        _selfMarker = updateMarker(_selfMarker, location, markerOpts);
-      });
-
-      return map;
-    }
-
-    /** attach existing map component to fresh page */
-    var redisplayMapComponent = function(element) {
-      var oldContainer = _mapComponent.getContainer();
-      var newContainer = angular.element(element);
-      newContainer.replaceWith(oldContainer);
-
-      _mapComponent.invalidateSize(false);
-      /*
-      if(deferredCenter) {
-          mapView.setView(deferredCenter.location, deferredCenter.zoom);
-          deferredCenter = null;
-      }*/
-      hideMenu();
-    };
-
-    function openMapComponent(element) {
-      if(_mapComponent) {
-        redisplayMapComponent(element);
-        return;
-      }
-      _mapComponent = createMapComponent(element);
-
-      self.startLocating();
-    }
-
-    function startLocating() {
       var opts = {
-        /*
         timeout: 10000,
         maximumAge: 10000,
         enableHighAccuracy: true,
-        */
         watch: true
       };
-      _mapComponent.locate(opts);
+      map.locate(opts);
+
+      var selfMarkerOpts = {
+        icon: new L.Icon(
+          {
+            iconUrl: 'images/pin-cross.png',
+            iconSize: [20, 25],
+            iconAnchor: [10, 25],
+            popupAnchor: [-3, -76],
+            className: 'self-location'
+          })
+      };
+      CurrentLocation.listen(function(event, location) {
+        _selfMarker = updateMarker(_selfMarker, location, selfMarkerOpts);
+      });
+
+      _selfMarker = updateMarker(_selfMarker, CurrentLocation.get(), selfMarkerOpts);
+
+      return map;
     }
 
     function invalidateSize() {
@@ -241,9 +227,9 @@
 
     // API
     self.center = center;
-    self.startLocating = startLocating;
-    self.openMap = openMapComponent;
     self.invalidateSize = invalidateSize;
+    self.getMapDefaults = getMapDefaults;
+    self.registerMap = registerMap;
   });
 
 })();
