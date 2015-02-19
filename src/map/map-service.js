@@ -2,7 +2,6 @@
 
 (function() {
   var module = require('./_index');
-  var angular = require('angular');
   var L = require('leaflet');
   require('./leaflet-map-menu');
 
