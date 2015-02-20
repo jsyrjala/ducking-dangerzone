@@ -43,6 +43,7 @@
   module.service('MapService', function MapService(Config, $timeout, $location, $rootScope, CurrentLocation, Storage, Time) {
     var _mapStateKey = 'map-state';
     var self = this;
+    var _alreadyLocating = false;
     var _mapComponent,
         _markers;
 
@@ -134,6 +135,43 @@
       };
     }
 
+    var selfMarkerOpts = {
+      icon: new L.Icon(
+        {
+          iconUrl: 'images/pin-cross.png',
+          iconSize: [20, 25],
+          iconAnchor: [10, 25],
+          popupAnchor: [-3, -76],
+          className: 'self-location'
+        })
+    };
+    function startLocating(map) {
+      if(_alreadyLocating) {
+        return;
+      }
+      _alreadyLocating = true;
+
+      map.on('locationfound', function(event) {
+        console.info('location found', event);
+        CurrentLocation.set(event.latlng);
+      });
+      map.on('locationerror', function(event) {
+        console.info('location error', event);
+      });
+
+      var opts = {
+        timeout: 10000,
+        maximumAge: 10000,
+        enableHighAccuracy: true,
+        watch: true
+      };
+      map.locate(opts);
+
+      CurrentLocation.listen(function(event, location) {
+        _markers.selfMarker = updateMarker(_markers.selfMarker, location, selfMarkerOpts);
+      });
+    }
+
     function registerMap(map) {
       _mapComponent = map;
       // setup layers
@@ -180,43 +218,12 @@
       map.on('exitFullscreen', function(){
         console.log('exited fullscreen');
       });
-
-      map.on('locationfound', function(event) {
-        console.info('location found', event);
-        CurrentLocation.set(event.latlng);
-      });
-      map.on('locationerror', function(event) {
-        console.info('location error', event);
-      });
-
       map.on('zoomend', storeMapState);
       map.on('moveend', storeMapState);
       map.on('layeradd', storeMapState);
 
-      var opts = {
-        timeout: 10000,
-        maximumAge: 10000,
-        enableHighAccuracy: true,
-        watch: true
-      };
-      map.locate(opts);
-
-      var selfMarkerOpts = {
-        icon: new L.Icon(
-          {
-            iconUrl: 'images/pin-cross.png',
-            iconSize: [20, 25],
-            iconAnchor: [10, 25],
-            popupAnchor: [-3, -76],
-            className: 'self-location'
-          })
-      };
-      CurrentLocation.listen(function(event, location) {
-        _markers.selfMarker = updateMarker(_markers.selfMarker, location, selfMarkerOpts);
-      });
-
+      startLocating(map);
       _markers.selfMarker = updateMarker(_markers.selfMarker, CurrentLocation.get(), selfMarkerOpts);
-
       return map;
     }
 
