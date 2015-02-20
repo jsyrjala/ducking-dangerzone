@@ -6,5 +6,5 @@
   require('./map-service.js');
   require('./map-component.js');
   require('./map-menu.js');
-
+  require('./map-draw.js');
 })();

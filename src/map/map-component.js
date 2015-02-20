@@ -17,10 +17,11 @@
     };
   }
 
-  function MapComponentCtrl($scope, MapService, leafletData) {
+  function MapComponentCtrl($scope, MapService, leafletData, MapDraw) {
     angular.extend($scope, MapService.getMapDefaults());
     leafletData.getMap('map-view').then(function(map) {
       MapService.registerMap(map);
+      MapDraw.drawSessions(map);
     });
   }
 
