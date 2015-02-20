@@ -14,9 +14,10 @@
     </span>
     <div ng-if="tracker.sessions.length != 0">
       Sessions
-      <ul>
+      <ul class="session-rows">
         <li ng-repeat="session in tracker.sessions">
           <!-- show ago + duration -->
+          <code>{{::session.id}}</code>
           <span title="{{::session.first_event_time}}">{{::session.first_event_time | timeAgo}}</span>
           <span>{{::session.duration}}</span>
           <code>{{::session.session_code}}</code>

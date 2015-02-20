@@ -1,0 +1,31 @@
+@import 'vars';
+@import 'typography';
+@import 'mixins';
+
+
+#trackers-page {
+  .tracker-row {
+
+  }
+  .tracker-summary {
+    &:hover {
+      color: $hover-color;
+      background-color: $hover-background;
+      cursor: pointer;
+    }
+  }
+  .session-rows {
+    li {
+      list-style-type: none;
+      &:hover {
+        color: $hover-color;
+        background-color: $hover-background;
+        cursor: pointer;
+      }
+
+    }
+
+
+  }
+
+}
