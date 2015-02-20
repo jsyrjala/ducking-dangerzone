@@ -17,10 +17,10 @@
       <ul class="session-rows">
         <li ng-repeat="session in tracker.sessions" ng-click="ctrl.selectSession(session)">
           <!-- show ago + duration -->
-          <code>{{::session.id}}</code>
+          <code title="session.id">{{::session.id}}</code>
           <span title="{{::session.firstEventTime}}">{{::session.firstEventTime | timeAgo}}</span>
           <span>{{::session.duration}}</span>
-          <code>{{::session.sessionCode}}</code>
+          <small class="session-code"><code title="session code">{{::session.sessionCode}}</code></small>
         </li>
       </ul>
     </div>
