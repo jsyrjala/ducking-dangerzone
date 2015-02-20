@@ -8,8 +8,8 @@
     var self = this;
     // TODO is resolve in route a good thing?
     self.trackers = _.sortBy(trackersData.trackers, function(tracker) {
-      if(tracker.latest_activity) {
-        return -moment(tracker.latest_activity).unix();
+      if(tracker.latestActivity) {
+        return -moment(tracker.latestActivity).unix();
       }
       return -moment(0).unix();
     });
@@ -25,11 +25,11 @@
         TrackerService.listSessions(tracker).then(function(data) {
           tracker.sessions = _.chain(data.sessions)
               .map(function(session) {
-                session.duration = moment(session.latest_event_time).diff(moment(session.first_event_time));
+                session.duration = moment(session.latestEventTime).diff(moment(session.latestEventTime));
                 return session;
               })
               .sortBy(function(session) {
-                return -moment(session.first_event_time).unix();
+                return -moment(session.firstEventTime).unix();
               }).value();
         });
         // TODO handle error
@@ -37,6 +37,12 @@
         tracker.sessions = undefined;
       }
     }
+
+    function selectSession(session) {
+      console.log('selected session', session);
+    }
+
+    self.selectSession = selectSession;
     self.toggleDetails = toggleDetails;
   }
 

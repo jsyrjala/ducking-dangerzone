@@ -5,14 +5,24 @@
 
   module.service('TrackerService', function TrackerService($resource, Config) {
     var self = this;
+    function transform(data) {
+      return window.walkTree(JSON.parse(data), window.convertKey);
+    }
+    var getOpts = {get: {
+      transformResponse: transform
+    }};
+    var trackerResource = $resource(Config.server.url + '/trackers',
+            {}, getOpts);
+
+    var sessionsResource = $resource(Config.server.url + '/trackers/:trackerId/sessions',
+            {}, getOpts);
+
     function listTrackers() {
-      return $resource(Config.server.url + '/trackers',
-              {}, {}).get().$promise;
+      return trackerResource.get().$promise;
     }
 
     function listSessions(tracker) {
-      return $resource(Config.server.url + '/trackers/:trackerId/sessions',
-              {trackerId: tracker.id}, {}).get().$promise;
+      return sessionsResource.get({trackerId: tracker.id}).$promise;
     }
     // API
     self.listTrackers = listTrackers;
