@@ -48,6 +48,16 @@
       session.selected = !session.selected;
     }
 
+    function followTracker(tracker) {
+      if(tracker.following) {
+        console.log('stop following tracker', tracker);
+      } else {
+        console.log('start following tracker', tracker);
+      }
+      tracker.following = !tracker.following;
+    }
+
+    self.followTracker = followTracker;
     self.selectSession = selectSession;
     self.toggleDetails = toggleDetails;
   }

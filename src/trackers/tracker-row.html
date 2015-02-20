@@ -1,9 +1,11 @@
 <div class="tracker-row">
-  <div class="tracker-summary" ng-click="ctrl.toggleDetails(tracker)">
+  <div class="tracker-summary" >
     <div>
-      <strong>{{tracker.trackerCode}}</strong> <span title="{{tracker.latestActivity}}">{{tracker.latestActivity | timeAgo}}</span>
+      <strong ng-click="ctrl.toggleDetails(tracker)">{{tracker.trackerCode}}</strong> <span title="{{tracker.latestActivity}}">{{tracker.latestActivity | timeAgo}}</span>
+      <a ng-click="ctrl.followTracker(tracker)" class="pure-button" ng-class="{'pure-button-primary': tracker.following}">{{tracker.following ? 'Following' : 'Follow'}}</a>
+
     </div>
-    <div>
+    <div ng-click="ctrl.toggleDetails(tracker)">
       {{tracker.name}}
     </div>
   </div>
