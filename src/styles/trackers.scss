@@ -30,4 +30,12 @@
     color: grey;
   }
 
+  li.selected {
+    background-color: $selected;
+    &::after {
+      content: " [selected]";
+      color: blue;
+      font-weight: bold;
+}
+  }
 }

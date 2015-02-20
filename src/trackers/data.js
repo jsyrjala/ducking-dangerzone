@@ -29,6 +29,14 @@
       return sessions;
     }
 
+    function isSelected(session) {
+      if(session.id) {
+        return !! sessions[session.id];
+      }
+      return !! sessions[session];
+    }
+
+    self.isSelected = isSelected;
     self.getSessions = getSessions;
     self.addSession = addSession;
     self.removeSession = removeSession;

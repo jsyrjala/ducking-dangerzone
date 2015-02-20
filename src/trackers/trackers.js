@@ -26,6 +26,7 @@
           tracker.sessions = _.chain(data.sessions)
               .map(function(session) {
                 session.duration = moment(session.latestEventTime).diff(moment(session.latestEventTime));
+                session.selected = SelectedSessions.isSelected(session);
                 return session;
               })
               .sortBy(function(session) {
@@ -39,7 +40,12 @@
     }
 
     function selectSession(session) {
-      SelectedSessions.addSession(session);
+      if(session.selected) {
+        SelectedSessions.removeSession(session);
+      } else {
+        SelectedSessions.addSession(session);
+      }
+      session.selected = !session.selected;
     }
 
     self.selectSession = selectSession;
