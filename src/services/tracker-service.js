@@ -32,14 +32,14 @@
     }
 
     function subscribeTracker(tracker) {
-      WebSocket.websocket().send({
+      WebSocket.send({
         subscribe: 'trackers',
         ids: [tracker.id],
       });
     }
 
     function unsubscribeTracker(tracker) {
-      WebSocket.websocket().send({
+      WebSocket.send({
         unsubscribe: 'trackers',
         ids: [tracker.id],
       });

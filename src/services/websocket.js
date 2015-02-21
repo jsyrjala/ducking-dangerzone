@@ -3,9 +3,17 @@
 (function() {
   var module = require('./_index');
 
+  // @ngInject
   module.service('WebSocket', function WebSocket(Config, $websocket, $timeout) {
     var self = this;
     var _ws;
+    var _openListeners = [];
+
+    /** callback($websocket) */
+    function registerOnOpen(callback) {
+      console.info('registerOnOpen');
+      _openListeners.push(callback);
+    }
 
     function websocket() {
       if(_ws) {
@@ -13,13 +21,16 @@
       }
       console.info('Initializing WebSocket');
       var ws = $websocket(Config.server.websocket);
+      ws.onOpen(function(msg) {
+        console.log('websocket:open', msg);
+        _.each(_openListeners, function(listener) {
+          listener(ws);
+        });
+      });
       ws.onMessage(function(msg) {
         var parsed = JSON.parse(msg.data);
         parsed = walkTree(parsed, convertKey);
         console.log('websocket:receive', parsed);
-      });
-      ws.onOpen(function(msg) {
-        console.log('websocket:open', msg);
       });
       ws.onClose(function(msg) {
         console.log('websocket:close', msg);
@@ -31,7 +42,15 @@
       return _ws;
     }
 
-    self.websocket = websocket;
+    function send(message) {
+      websocket().send(message);
+    }
+    $timeout(function() {
+      send('jeejeje');
+    }, 5000);
+    // API
+    self.send = send;
+    self.registerOnOpen = registerOnOpen;
   });
 
 })();

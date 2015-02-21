@@ -15,7 +15,7 @@
     });
   });
 
-  function TrackerRowCtrl(TrackerService, SelectedSessions) {
+  function TrackerRowCtrl(TrackerService, SelectedTrackers, SelectedSessions) {
     var self = this;
     self.showDetails = false;
     function toggleDetails(tracker) {
@@ -51,9 +51,11 @@
     function followTracker(tracker) {
       if(tracker.following) {
         console.log('stop following tracker', tracker);
+        SelectedTrackers.removeTracker(tracker);
         TrackerService.unsubscribeTracker(tracker);
       } else {
         console.log('start following tracker', tracker);
+        SelectedTrackers.addTracker(tracker);
         TrackerService.subscribeTracker(tracker);
       }
       tracker.following = !tracker.following;

@@ -2,6 +2,53 @@
 
 (function() {
   var module = require('./_index.js');
+
+  // @ngInject
+  module.service('SelectedTrackers', function(TrackerService, WebSocket) {
+    var self = this;
+    var trackers = {};
+    console.log('SelectedTrackers');
+
+    // TODO websocket protocol handling doesn't belong here
+    function subscribeTrackers(ws) {
+      if(_.isEmpty(trackers)) {
+        console.info('No trackers to subscribe');
+        return;
+      }
+      console.info('Subscribing ' + _.keys(trackers).length + ' trackers.');
+      ws.send({
+        subscribe: 'trackers',
+        ids: _.keys(trackers)
+      });
+    }
+
+    WebSocket.registerOnOpen(subscribeTrackers);
+
+    function addTracker(tracker) {
+      console.log('selected tracker', tracker);
+
+      var trackersData = {
+        tracker: tracker,
+        events: [],
+      };
+      trackers[tracker.id] = trackersData;
+
+
+    }
+    function removeTracker(tracker) {
+      delete trackers[tracker.id];
+    }
+    function getTrackers() {
+      return trackers;
+    }
+
+    // API
+    self.addTracker = addTracker;
+    self.removeTracker = removeTracker;
+    self.getTrackers = getTrackers;
+  });
+
+
   // Contains data for currently selected trackers
   // @ngInject
   module.service('SelectedSessions', function(TrackerService) {
