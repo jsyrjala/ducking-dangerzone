@@ -4,15 +4,18 @@
   var module = require('./_index.js');
   var moment = require('moment');
   // @ngInject
-  module.controller('TrackersPageCtrl', function(trackersData, TrackerService) {
+  module.controller('TrackersPageCtrl', function(trackersData, SelectedTrackers) {
     var self = this;
     // TODO is resolve in route a good thing?
-    self.trackers = _.sortBy(trackersData.trackers, function(tracker) {
+    self.trackers = _.chain(trackersData.trackers).sortBy(function(tracker) {
       if(tracker.latestActivity) {
         return -moment(tracker.latestActivity).unix();
       }
       return -moment(0).unix();
-    });
+    }).map(function(tracker) {
+      tracker.following = SelectedTrackers.isSelected(tracker);
+      return tracker;
+    }).value();
   });
 
   function TrackerRowCtrl(TrackerService, SelectedTrackers, SelectedSessions) {

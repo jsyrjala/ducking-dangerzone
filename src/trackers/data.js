@@ -41,8 +41,15 @@
     function getTrackers() {
       return trackers;
     }
+    function isSelected(tracker) {
+      if(tracker.id) {
+        return !! trackers[tracker.id];
+      }
+      return !! trackers[tracker];
+    }
 
     // API
+    self.isSelected = isSelected;
     self.addTracker = addTracker;
     self.removeTracker = removeTracker;
     self.getTrackers = getTrackers;
