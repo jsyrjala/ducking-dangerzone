@@ -26,16 +26,15 @@
 
     function addTracker(tracker) {
       console.log('selected tracker', tracker);
-
+      TrackerService.subscribeTracker(tracker);
       var trackersData = {
         tracker: tracker,
         events: [],
       };
       trackers[tracker.id] = trackersData;
-
-
     }
     function removeTracker(tracker) {
+      TrackerService.unsubscribeTracker(tracker);
       delete trackers[tracker.id];
     }
     function getTrackers() {

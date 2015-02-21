@@ -43,11 +43,10 @@
     }
 
     function send(message) {
+      console.log('send', message)
       websocket().send(message);
     }
-    $timeout(function() {
-      send('jeejeje');
-    }, 5000);
+
     // API
     self.send = send;
     self.registerOnOpen = registerOnOpen;
