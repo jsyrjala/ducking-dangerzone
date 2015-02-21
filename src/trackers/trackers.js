@@ -51,8 +51,10 @@
     function followTracker(tracker) {
       if(tracker.following) {
         console.log('stop following tracker', tracker);
+        TrackerService.unsubscribeTracker(tracker);
       } else {
         console.log('start following tracker', tracker);
+        TrackerService.subscribeTracker(tracker);
       }
       tracker.following = !tracker.following;
     }

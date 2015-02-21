@@ -8,8 +8,10 @@
     apiUrl: '/api/v1',
     server: {
       url: 'http://dev-server.ruuvitracker.fi/api/v1-dev/',
+      websocket: 'ws://dev-server.ruuvitracker.fi/api/v1-dev/websocket'
     },
     map: {
+      // Helsinki
       defaultLocation: new L.LatLng(60.168564, 24.941111),
       defaultZoom: 13,
       defaultLayer: 'OpenStreetMap',

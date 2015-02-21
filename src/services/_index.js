@@ -10,6 +10,7 @@
   require('./user-service.js');
   require('./tracker-service.js');
   require('./storage-service.js');
+  require('./websocket.js');
   require('./util.js');
 
 })();

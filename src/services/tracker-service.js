@@ -3,7 +3,7 @@
 (function() {
   var module = require('./_index');
 
-  module.service('TrackerService', function TrackerService($resource, Config) {
+  module.service('TrackerService', function TrackerService($resource, Config, WebSocket) {
     var self = this;
     function transform(data) {
       return window.walkTree(JSON.parse(data), window.convertKey);
@@ -30,10 +30,27 @@
     function listEvents(session) {
       return eventsResource.get({sessionId: session.id}).$promise;
     }
-    
+
+    function subscribeTracker(tracker) {
+      WebSocket.websocket().send({
+        subscribe: 'trackers',
+        ids: [tracker.id],
+      });
+    }
+
+    function unsubscribeTracker(tracker) {
+      WebSocket.websocket().send({
+        unsubscribe: 'trackers',
+        ids: [tracker.id],
+      });
+    }
+
     // API
     self.listTrackers = listTrackers;
     self.listSessions = listSessions;
     self.listEvents = listEvents;
+
+    self.subscribeTracker = subscribeTracker;
+    self.unsubscribeTracker = unsubscribeTracker;
   });
 })();

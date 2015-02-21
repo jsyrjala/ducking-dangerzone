@@ -76,7 +76,8 @@
     "gulp-sourcemaps": "~1.3.0",
     "vinyl-buffer": "~1.0.0",
     "gulp-rev-collector": "~0.1.3",
-    "angular-leaflet-directive": "~0.7.11"
+    "angular-leaflet-directive": "~0.7.11",
+    "angular-websocket": "~1.0.8"
   },
   "browserify": {
     "transform": [

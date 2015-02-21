@@ -10,6 +10,8 @@
   require('angular-messages');
   require('angular-leaflet-directive');
 
+  require('../vendor/angular-websocket');
+
   // cached templates
   require('../js/templates');
 
@@ -34,6 +36,7 @@
       'ui.router',
       'templates',
       'leaflet-directive',
+      'ngWebSocket',
 
       'ruuvi.home',
       'ruuvi.login',
