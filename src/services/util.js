@@ -10,9 +10,12 @@
     if(_.contains(['event_time', 'store_time', 'created_on', 'latest_activity'], key)) {
       origObject[key] = moment(value).toDate();
     }
+<<<<<<< HEAD
     if(_.contains(['latitude', 'longitude'], key)) {
       origObject[key] = parseFloat(value);
     }
+=======
+>>>>>>> origin/subscribe-tracker
     var newKey = key;
     if (newKey.indexOf('_') !== -1) {
       newKey = _.camelCase(newKey);
