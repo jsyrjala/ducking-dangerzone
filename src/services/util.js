@@ -1,8 +1,18 @@
 'use strict';
 
 (function() {
-
+  var moment = require('moment');
   window.convertKey = function convertKey(origObject, key) {
+    var value = origObject[key];
+    if(_.contains(['id', 'event_session_id', 'tracker_id'], key)) {
+      origObject[key] = parseInt(value);
+    }
+    if(_.contains(['event_time', 'store_time', 'created_on', 'latest_activity'], key)) {
+      origObject[key] = moment(value).toDate();
+    }
+    if(_.contains(['latitude', 'longitude'], key)) {
+      origObject[key] = parseFloat(value);
+    }
     var newKey = key;
     if (newKey.indexOf('_') !== -1) {
       newKey = _.camelCase(newKey);

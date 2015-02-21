@@ -21,12 +21,10 @@
 
 
       _.each(SelectedSessions.getSessions(), function(sessionData) {
-        console.log('session', sessionData);
         var points = _.chain(sessionData.events).filter(function(event) {
           return event.location;
         }).map(function(event) {
-          // TODO parseFloat in preProcess
-          return [parseFloat(event.location.latitude), parseFloat(event.location.longitude)];
+          return [event.location.latitude, event.location.longitude];
         }).value();
 
         var polylineOptions = {
@@ -34,7 +32,6 @@
           color: colors[parseInt(sessionData.session.id) % colors.length] || 'red',
           opacity: 0.8,
         };
-        console.log('color', polylineOptions.color, sessionData.session.id, colors.length)
         L.polyline(points, polylineOptions).addTo(map);
       });
     }
