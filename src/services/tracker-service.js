@@ -17,8 +17,12 @@
     var sessionsResource = $resource(Config.server.url + '/trackers/:trackerId/sessions',
             {}, getOpts);
 
+    var sessionResource = $resource(Config.server.url + '/sessions/:sessionId',
+            {}, getOpts);
+
     var eventsResource = $resource(Config.server.url + '/sessions/:sessionId/events',
             {}, getOpts);
+
     function listTrackers() {
       return trackerResource.get().$promise;
     }
@@ -27,6 +31,9 @@
       return sessionsResource.get({trackerId: tracker.id}).$promise;
     }
 
+    function getSession(sessionId) {
+      return sessionResource.get({sessionId: sessionId}).$promise;
+    }
     function listEvents(session) {
       return eventsResource.get({sessionId: session.id}).$promise;
     }
@@ -48,6 +55,7 @@
     // API
     self.listTrackers = listTrackers;
     self.listSessions = listSessions;
+    self.getSession = getSession;
     self.listEvents = listEvents;
 
     self.subscribeTracker = subscribeTracker;

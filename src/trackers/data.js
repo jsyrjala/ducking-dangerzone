@@ -61,6 +61,25 @@
     var self = this;
     var sessions = {};
 
+    function receiveNewEvents(events) {
+      console.log('receiveNewEvents', events);
+      _.each(events, function(event) {
+        if(sessions[event.eventSessionId]) {
+          sessions[event.eventSessionId].events.push(event);
+        } else {
+          sessions[event.eventSessionId] = {
+            events: [event]
+          };
+          /*
+          TrackerService.getSession(event.eventSessionId).then(function(session) {
+            sessions[event.eventSessionId].session = session;
+          });
+          */
+        }
+        // TODO notify map to draw these
+      });
+    }
+
     function addSession(session) {
       console.log('selected session', session);
 
@@ -71,7 +90,6 @@
       sessions[session.id] = sessionData;
       TrackerService.listEvents(session).then(function(data) {
         console.info('fetched events for session ' + session.id + ' got ' + data.events.length + ' events');
-        // TODO notify map to draw these
         sessionData.events = sessionData.events.concat(data.events);
       });
     }
