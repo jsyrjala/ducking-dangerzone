@@ -106,8 +106,8 @@
             session: {id: event.eventSessionId},
             events: [event]
           };
-          TrackerService.getSession(event.eventSessionId).then(function(session) {
-            sessions[event.eventSessionId].session = session;
+          TrackerService.getSession(event.eventSessionId).then(function(sessionData) {
+            sessions[event.eventSessionId].session = sessionData.sessions[0];
           });
         }
         _.each(newEventListeners, function(listener) {

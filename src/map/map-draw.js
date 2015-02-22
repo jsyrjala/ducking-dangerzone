@@ -20,7 +20,6 @@
     var self = this;
 
     function lineOpts(session) {
-      console.log('session', session.id, session);
       return {
         color: colors[session.id % colors.length] || 'red',
         opacity: 0.8,
@@ -49,8 +48,8 @@
         sessionData.line = L.polyline(points, lineOpts(sessionData.session)).addTo(map);
       });
       SelectedSessions.listenNewEvents(function(event) {
-        drawNewEvent(map, event)
-      })
+        drawNewEvent(map, event);
+      });
     }
 
     // API

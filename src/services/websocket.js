@@ -9,6 +9,7 @@
     var _ws;
     var _openListeners = [];
     var _messageListeners = {};
+
     /** callback($websocket) */
     function registerOnOpen(callback) {
       console.info('registerOnOpen');
@@ -29,7 +30,7 @@
       console.info('Initializing WebSocket');
       var ws = $websocket(Config.server.websocket);
       ws.onOpen(function(msg) {
-        console.log('websocket:open', msg);
+        console.debug('websocket:open', msg);
         _.each(_openListeners, function(listener) {
           listener(ws);
         });
@@ -37,7 +38,7 @@
       ws.onMessage(function(msg) {
         var parsed = JSON.parse(msg.data);
         parsed = walkTree(parsed, convertKey);
-        console.debug('websocket:receive', parsed);
+        console.debug('websocket:receive', msg.data);
         _.each(_.keys(_messageListeners), function(eventType) {
           if(parsed[eventType]) {
             _.each(_messageListeners[eventType], function(listener) {
@@ -47,7 +48,7 @@
         });
       });
       ws.onClose(function(msg) {
-        console.log('websocket:close', msg);
+        console.debug('websocket:close', msg);
         _ws = undefined;
         $timeout(websocket, 200);
       });
@@ -56,7 +57,7 @@
     }
 
     function send(message) {
-      console.log('WebSocket.send', message);
+      console.debug('WebSocket.send', message);
       websocket().send(message);
     }
 
