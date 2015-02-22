@@ -69,13 +69,10 @@
         var popupOpts = {
           className: 'self-marker-popup',
         };
-        var popup = L.popup(popupOpts).setContent(content);
-        newMarker.bindPopup(popup);
-        _mapComponent.on('popupopen', function(a) {
-          var latLng = newMarker.getLatLng();
-          var location = parseFloat(latLng.lat).toFixed(5) + ', ' + parseFloat(latLng.lng).toFixed(5);
-          a.popup.setContent('<strong>My location</strong><br />' + location);
-        });
+        var markerPopup = L.popup(popupOpts).setContent(content);
+        markerPopup.markerType = 'self-marker';
+
+        newMarker.bindPopup(markerPopup);
         var circle = createCircle(newLocation, accuracy);
         _mapComponent.addLayer(circle);
         return {marker: newMarker, circle: circle};
@@ -180,6 +177,16 @@
         return;
       }
       _alreadyLocating = true;
+
+      function updateSelfMarkerPopup(event) {
+        if(event.popup.markerType !== 'self-marker') {
+          return;
+        }
+        var latLng = event.popup.getLatLng();
+        var location = parseFloat(latLng.lat).toFixed(5) + ', ' + parseFloat(latLng.lng).toFixed(5);
+        event.popup.setContent('<strong>My location</strong><br />' + location);
+      }
+      map.on('popupopen', updateSelfMarkerPopup);
 
       map.on('locationfound', function(event) {
         console.info('location found', event);
