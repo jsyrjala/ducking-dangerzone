@@ -15,17 +15,17 @@
    * @ngInject
    */
   module.service('CurrentLocation', function($rootScope) {
-    var _location;
+    var _locationData;
     var _eventKey = 'location:change';
     var self = this;
 
     function get() {
-      return _location;
+      return _locationData;
     }
 
-    function set(location) {
-      _location = location;
-      $rootScope.$emit(_eventKey, location);
+    function set(locationData) {
+      _locationData = locationData;
+      $rootScope.$emit(_eventKey, locationData);
       return location;
     }
 
@@ -52,18 +52,35 @@
     }
     reset();
 
-    function updateMarker(marker, newLocation, options) {
+    function updateMarker(markerData, options, newLocation, accuracy) {
       if(!newLocation) {
-        return marker;
+        return selfMarkerOpts;
       }
-      if(!marker) {
+      function createCircle(location, accuracy) {
+        // TODO colors
+        return L.circle(newLocation, accuracy);
+      }
+
+      if(!markerData) {
         var newMarker = new L.Marker(newLocation, options);
         newMarker.addTo(_mapComponent);
-        return newMarker;
+        var circle = createCircle(newLocation, accuracy);
+        _mapComponent.addLayer(circle);
+        return {marker: newMarker, circle: circle};
       }
-      marker.setLatLng(newLocation);
-      marker.update();
-      return marker;
+      markerData.marker.setLatLng(newLocation);
+      markerData.marker.update();
+
+      if(markerData.circle) {
+        _mapComponent.removeLayer(markerData.circle);
+        markerData.circle = undefined;
+      }
+      if(accuracy) {
+        markerData.circle = createCircle(newLocation, accuracy);
+        _mapComponent.addLayer(markerData.circle);
+      }
+
+      return markerData;
     }
 
 
@@ -154,7 +171,10 @@
 
       map.on('locationfound', function(event) {
         console.info('location found', event);
-        CurrentLocation.set(event.latlng);
+        CurrentLocation.set({
+          location: event.latlng,
+          accuracy: event.accuracy
+        });
       });
       map.on('locationerror', function(event) {
         console.info('location error', event);
@@ -168,8 +188,8 @@
       };
       map.locate(opts);
 
-      CurrentLocation.listen(function(event, location) {
-        _markers.selfMarker = updateMarker(_markers.selfMarker, location, selfMarkerOpts);
+      CurrentLocation.listen(function(event, locationData) {
+        _markers.selfMarker = updateMarker(_markers.selfMarker, selfMarkerOpts, locationData.location, locationData.accuracy);
       });
     }
 
@@ -224,7 +244,10 @@
       map.on('layeradd', storeMapState);
 
       startLocating(map);
-      _markers.selfMarker = updateMarker(_markers.selfMarker, CurrentLocation.get(), selfMarkerOpts);
+      var locationData = CurrentLocation.get();
+      if(locationData) {
+        _markers.selfMarker = updateMarker(_markers.selfMarker, selfMarkerOpts, locationData.location, locationData.accuracy);
+      }
       return map;
     }
 
@@ -232,9 +255,13 @@
       _mapComponent.invalidateSize();
     }
 
-    function center(location, zoom) {
-      if(location) {
-        _mapComponent.setView(location, zoom);
+    function center(locationData, zoom) {
+      if(locationData) {
+        if(locationData.location) {
+          _mapComponent.setView(locationData.location, zoom);
+        } else {
+          _mapComponent.setView(location, zoom);
+        }
       }
     }
 
