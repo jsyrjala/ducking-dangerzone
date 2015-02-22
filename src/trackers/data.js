@@ -9,18 +9,15 @@
     var trackers = {};
     var storageKey = 'selected-trackers';
 
-    console.log('SelectedTrackers');
-
     /**
      * Read list of selected trackerId's from local storage
      */
     function loadStoredTrackers() {
       var selectedTrackers = Storage.get(storageKey);
-      console.log(selectedTrackers);
       if(!selectedTrackers) {
         return;
       }
-      console.log('Found ' + _.keys(selectedTrackers).length  + ' selected trackers in local storage.');
+      console.info('Found ' + _.keys(selectedTrackers).length  + ' selected trackers in local storage.');
       _.each(selectedTrackers, function(trackerId) {
         var trackerData = {events: []};
         trackers[trackerId] = trackerData;
@@ -60,7 +57,7 @@
 
 
     function addTracker(tracker) {
-      console.log('selected tracker', tracker);
+      console.debug('Selected tracker', tracker);
       TrackerService.subscribeTracker(tracker);
       var trackersData = {
         tracker: tracker,
