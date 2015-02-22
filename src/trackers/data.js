@@ -4,10 +4,33 @@
   var module = require('./_index.js');
 
   // @ngInject
-  module.service('SelectedTrackers', function(TrackerService, WebSocket) {
+  module.service('SelectedTrackers', function(TrackerService, WebSocket, Storage) {
     var self = this;
     var trackers = {};
+    var storageKey = 'selected-trackers';
+
     console.log('SelectedTrackers');
+
+    /**
+     * Read list of selected trackerId's from local storage
+     */
+    function loadStoredTrackers() {
+      var selectedTrackers = Storage.get(storageKey);
+      console.log(selectedTrackers);
+      if(!selectedTrackers) {
+        return;
+      }
+      console.log('Found ' + _.keys(selectedTrackers).length  + ' selected trackers in local storage.');
+      _.each(selectedTrackers, function(trackerId) {
+        var trackerData = {events: []};
+        trackers[trackerId] = trackerData;
+        // read tracker data
+        TrackerService.getTracker(trackerId).then(function(tracker) {
+          trackerData.tracker = tracker;
+        });
+      });
+    }
+
 
     // TODO websocket protocol handling doesn't belong here
     function subscribeTrackers(ws) {
@@ -22,7 +45,19 @@
       });
     }
 
-    WebSocket.registerOnOpen(subscribeTrackers);
+    function initialize() {
+      loadStoredTrackers();
+      WebSocket.registerOnOpen(subscribeTrackers);
+
+      if(!_.isEmpty(trackers)) {
+        WebSocket.open();
+      }
+    }
+
+    function storeTrackers() {
+      Storage.set(storageKey, _.keys(trackers));
+    }
+
 
     function addTracker(tracker) {
       console.log('selected tracker', tracker);
@@ -32,10 +67,12 @@
         events: [],
       };
       trackers[tracker.id] = trackersData;
+      storeTrackers();
     }
     function removeTracker(tracker) {
       TrackerService.unsubscribeTracker(tracker);
       delete trackers[tracker.id];
+      storeTrackers();
     }
     function getTrackers() {
       return trackers;
@@ -48,6 +85,7 @@
     }
 
     // API
+    self.initialize = initialize;
     self.isSelected = isSelected;
     self.addTracker = addTracker;
     self.removeTracker = removeTracker;

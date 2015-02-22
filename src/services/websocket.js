@@ -43,13 +43,18 @@
     }
 
     function send(message) {
-      console.log('send', message)
+      console.log('WebSocket.send', message);
       websocket().send(message);
+    }
+
+    function open() {
+      websocket();
     }
 
     // API
     self.send = send;
     self.registerOnOpen = registerOnOpen;
+    self.open = open;
   });
 
 })();

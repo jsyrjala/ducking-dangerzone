@@ -4,7 +4,7 @@
    /**
    * @ngInject
    */
-  function OnRun($rootScope, Config) {
+  function OnRun($rootScope, Config, SelectedTrackers) {
 
     // change page title based on state
     $rootScope.$on('$stateChangeSuccess', function(event, toState) {
@@ -19,6 +19,8 @@
     // https://github.com/ftlabs/fastclick
     var attachFastClick = require('fastclick');
     attachFastClick(document.body);
+
+    SelectedTrackers.initialize();
   }
 
   module.exports = OnRun;
