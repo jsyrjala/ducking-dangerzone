@@ -8,11 +8,18 @@
     var self = this;
     var _ws;
     var _openListeners = [];
-
+    var _messageListeners = {};
     /** callback($websocket) */
     function registerOnOpen(callback) {
       console.info('registerOnOpen');
       _openListeners.push(callback);
+    }
+
+    function registerMessageListener(type, callback) {
+      if(!_messageListeners[type]) {
+        _messageListeners[type] = [];
+      }
+      _messageListeners[type].push(callback);
     }
 
     function websocket() {
@@ -30,11 +37,17 @@
       ws.onMessage(function(msg) {
         var parsed = JSON.parse(msg.data);
         parsed = walkTree(parsed, convertKey);
-        console.log('websocket:receive', parsed);
+        console.debug('websocket:receive', parsed);
+        _.each(_.keys(_messageListeners), function(eventType) {
+          if(parsed[eventType]) {
+            _.each(_messageListeners[eventType], function(listener) {
+              listener(parsed);
+            });
+          }
+        });
       });
       ws.onClose(function(msg) {
         console.log('websocket:close', msg);
-        // TODO redo subscribtions
         _ws = undefined;
         $timeout(websocket, 200);
       });
@@ -54,6 +67,7 @@
     // API
     self.send = send;
     self.registerOnOpen = registerOnOpen;
+    self.registerMessageListener = registerMessageListener;
     self.open = open;
   });
 

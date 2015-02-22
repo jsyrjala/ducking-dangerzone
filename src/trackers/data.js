@@ -92,27 +92,37 @@
 
   // Contains data for currently selected trackers
   // @ngInject
-  module.service('SelectedSessions', function(TrackerService) {
+  module.service('SelectedSessions', function(TrackerService, WebSocket) {
     var self = this;
     var sessions = {};
+    var newEventListeners = [];
 
     function receiveNewEvents(events) {
-      console.log('receiveNewEvents', events);
-      _.each(events, function(event) {
+      _.each(events.events, function(event) {
         if(sessions[event.eventSessionId]) {
           sessions[event.eventSessionId].events.push(event);
         } else {
           sessions[event.eventSessionId] = {
+            session: {id: event.eventSessionId},
             events: [event]
           };
-          /*
           TrackerService.getSession(event.eventSessionId).then(function(session) {
             sessions[event.eventSessionId].session = session;
           });
-          */
         }
+        _.each(newEventListeners, function(listener) {
+          listener(event);
+        });
         // TODO notify map to draw these
       });
+    }
+
+    function listenNewEvents(callback) {
+      newEventListeners.push(callback);
+    }
+
+    function initialize() {
+      WebSocket.registerMessageListener('events', receiveNewEvents);
     }
 
     function addSession(session) {
@@ -146,6 +156,8 @@
     self.getSessions = getSessions;
     self.addSession = addSession;
     self.removeSession = removeSession;
+    self.initialize = initialize;
+    self.listenNewEvents = listenNewEvents;
   });
 
 })();
