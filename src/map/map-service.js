@@ -52,6 +52,7 @@
     }
     reset();
 
+    // TODO move to map-draw.js
     function updateMarker(markerData, options, newLocation, accuracy) {
       if(!newLocation) {
         return selfMarkerOpts;
@@ -64,6 +65,17 @@
       if(!markerData) {
         var newMarker = new L.Marker(newLocation, options);
         newMarker.addTo(_mapComponent);
+        var content = 'My location';
+        var popupOpts = {
+          className: 'self-marker-popup',
+        };
+        var popup = L.popup(popupOpts).setContent(content);
+        newMarker.bindPopup(popup);
+        _mapComponent.on('popupopen', function(a) {
+          var latLng = newMarker.getLatLng();
+          var location = parseFloat(latLng.lat).toFixed(5) + ', ' + parseFloat(latLng.lng).toFixed(5);
+          a.popup.setContent('<strong>My location</strong><br />' + location);
+        });
         var circle = createCircle(newLocation, accuracy);
         _mapComponent.addLayer(circle);
         return {marker: newMarker, circle: circle};
@@ -159,8 +171,8 @@
           iconUrl: 'images/pin-cross.png',
           iconSize: [20, 25],
           iconAnchor: [10, 25],
-          popupAnchor: [-3, -76],
-          className: 'self-location'
+          popupAnchor: [0, -30],
+          className: 'self-marker'
         })
     };
     function startLocating(map) {
