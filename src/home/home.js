@@ -5,13 +5,9 @@
   /**
    * @ngInject
    */
-  function HomePageCtrl() {
-    _.map([1, 2, 3], function(e) {
-      console.log('lodash', e);
-    });
+  function HomePageCtrl(Config) {
     var self = this;
-    self.title = 'AngularJS, Gulp, and Browserify!';
-    self.number = 1234;
+    self.title = Config.appTitle;
   }
   module.controller('HomePageCtrl', HomePageCtrl);
 
@@ -25,7 +21,8 @@
       templateUrl: 'home/showData.html',
     };
   }
-  function ShowDataCtrl($scope) {
+  // @ngInject
+  function ShowDataCtrl($scope, Config) {
     console.log('ShowDataCtrl running');
     $scope.title = 'my title in ShowDataCtrl';
     $scope.query = function() {
