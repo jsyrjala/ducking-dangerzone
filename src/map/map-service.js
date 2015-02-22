@@ -124,7 +124,8 @@
       return {
         defaults: {
           tileLayer: selectedLayer.url,
-          maxZoom: 19,
+          maxZoom: selectedLayer.maxZoom,
+          minZoom: selectedLayer.minZoom || 1,
           zoomControl: false,
         },
         center: {
