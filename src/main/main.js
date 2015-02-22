@@ -10,7 +10,7 @@
   require('angular-messages');
   require('angular-leaflet-directive');
 
-  require('../vendor/angular-websocket');
+  require('angular-websocket');
 
   // cached templates
   require('../js/templates');
