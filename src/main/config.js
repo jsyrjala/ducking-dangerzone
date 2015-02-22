@@ -7,7 +7,7 @@
     appTitle: 'RuuviTracker Explorer',
     apiUrl: '/api/v1',
     server: {
-      url: 'http://dev-server.ruuvitracker.fi/api/v1-dev/',
+      url: 'http://dev-server.ruuvitracker.fi/api/v1-dev',
       websocket: 'ws://dev-server.ruuvitracker.fi/api/v1-dev/websocket'
     },
     map: {
