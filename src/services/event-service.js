@@ -19,7 +19,6 @@
           var key = keys[i];
           base += key + ':' + message[key] + '|';
       }
-      console.log('base', base)
       var hash = window.CryptoJS.HmacSHA1(base, sharedSecret);
       return hash.toString(window.CryptoJS.enc.Hex);
     }

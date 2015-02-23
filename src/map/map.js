@@ -5,6 +5,6 @@
   // @ngInject
   function MapPageCtrl() {
 
-  };
+  }
   module.controller('MapPageCtrl', MapPageCtrl);
 })();
