@@ -77,7 +77,8 @@
     "leaflet.fullscreen": "1.1.4",
     "moment": "2.9.0",
     "esprima": "~2.0.0",
-    "fastclick": "~1.0.6"
+    "fastclick": "~1.0.6",
+    "browserify-cryptojs": "~0.3.1"
   },
   "browserify": {
     "transform": [

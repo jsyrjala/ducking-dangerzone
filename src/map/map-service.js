@@ -40,13 +40,14 @@
   });
 
   // @ngInject
-  module.service('MapService', function MapService(Config, $timeout, $location, $rootScope, CurrentLocation, Storage, Time) {
+  module.service('MapService', function MapService(Config, $timeout, $location, $rootScope,
+      CurrentLocation, Storage, Time, EventService) {
     var _mapStateKey = 'map-state';
     var self = this;
     var _alreadyLocating = false;
     var _mapComponent,
-        _markers;
-
+        _markers,
+        _tracking = false;
     function reset() {
       _markers = {};
     }
@@ -188,11 +189,18 @@
       }
       map.on('popupopen', updateSelfMarkerPopup);
 
+      // TODO use raw geolocation api, locating should be on all the time
+      // also when map is not displayed
       map.on('locationfound', function(event) {
         console.info('location found', event);
         CurrentLocation.set({
           location: event.latlng,
-          accuracy: event.accuracy
+          accuracy: event.accuracy,
+          altitude: event.altitude,
+          altitudeAccuracy: event.altitudeAccuracy,
+          heading: event.altitudeAccuracy,
+          speed: event.speed,
+          timestamp: new Date(event.timestamp),
         });
       });
       map.on('locationerror', function(event) {
@@ -209,6 +217,17 @@
 
       CurrentLocation.listen(function(event, locationData) {
         _markers.selfMarker = updateMarker(_markers.selfMarker, selfMarkerOpts, locationData.location, locationData.accuracy);
+      });
+
+      var session = new Date().toISOString();
+
+      CurrentLocation.listen(function(event, locationData) {
+        // TODO check sending flag
+        var trackerCode = 'foobar';
+        var sharedSecret = 'foobar';
+        if(_tracking) {
+          EventService.sendEvent(trackerCode, sharedSecret, locationData, session);
+        }
       });
     }
 
@@ -284,12 +303,26 @@
       }
     }
 
+    function listenTracking(callback) {
+      callback(_tracking);
+      $rootScope.$on('tracking:enabled', function(event, enabled){
+        callback(enabled);
+      });
+    }
+
+    function tracking(enabled) {
+      _tracking = enabled;
+      $rootScope.$emit('tracking:enabled', enabled);
+    }
+
     // API
     self.reset = reset;
     self.center = center;
     self.invalidateSize = invalidateSize;
     self.getMapDefaults = getMapDefaults;
     self.registerMap = registerMap;
+    self.listenTracking = listenTracking;
+    self.tracking = tracking;
   });
 
 })();

@@ -9,6 +9,7 @@
   require('./login-service.js');
   require('./user-service.js');
   require('./tracker-service.js');
+  require('./event-service.js');
   require('./storage-service.js');
   require('./websocket.js');
   require('./util.js');

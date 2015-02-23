@@ -16,15 +16,16 @@
   module.controller('MapMenuCtrl', function MapMenuCtrl($scope, MapService, CurrentLocation) {
     var self = this;
     self.tracking = false;
+    MapService.listenTracking(function(trackingEnabled) {
+      self.tracking = trackingEnabled;
+    });
     self.locateMe = function() {
       MapService.center(CurrentLocation.get());
     };
     self.toggleTracking = function() {
       self.tracking = !self.tracking;
-      console.log('toggle tracking', self.tracking );
-      // TODO implement
-      // TODO add listener for map.locate changes that sends location to server
-      // TODO check that sending works while map is not visible
+      console.log('toggle tracking', self.tracking);
+      MapService.tracking(self.tracking);
     };
     $scope.$on('$destroy', function() {
       MapService.reset();
